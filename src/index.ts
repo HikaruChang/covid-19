@@ -11,8 +11,6 @@ export default {
   },
 };
 
-router.use(router.allowedMethods());
-
 router.get('/', async (ctx) => {
   return new Response('Make A Better World');
 });
