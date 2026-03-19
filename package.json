@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
@@ -14,23 +15,24 @@
     "db:seed:local": "wrangler d1 execute covid19-db --local --file=./db/seed.sql"
   },
   "dependencies": {
-    "next": "^16.2.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "@mui/material": "^6.4.0",
-    "@mui/icons-material": "^6.4.0",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.4.0",
+    "@mui/material": "^6.4.0",
+    "next": "^16.2.0",
     "next-intl": "^4.1.0",
-    "openpgp": "^5.11.0"
+    "openpgp": "^5.11.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.0.0",
     "@cloudflare/workers-types": "^4.20250312.0",
-    "typescript": "^5.7.0",
+    "@opennextjs/cloudflare": "^1.0.0",
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "patch-package": "^8.0.1",
+    "typescript": "^5.7.0",
     "wrangler": "^4.65.0"
   },
   "overrides": {
