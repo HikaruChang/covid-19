@@ -1,11 +1,17 @@
 compatibility_date = "2024-09-23"
-compatibility_flags = ["nodejs_compat"]
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+main = ".open-next/worker.js"
 name = "covid-19"
+
+# 靜態資源（Next.js chunks、圖片等）
+[assets]
+binding = "ASSETS"
+directory = ".open-next/assets"
 
 # Cloudflare D1 数据库
 [[d1_databases]]
 binding = "DB"
-database_id = "your-database-id-here"
+database_id = "617bc391-09e5-4f34-9e4f-85591def172d"
 database_name = "covid19-db"
 
 # Cloudflare R2 存储（PDF、大文件）
@@ -28,3 +34,8 @@ TURNSTILE_SITE_KEY = "0x4AAAAAACtWGQ8754ZRIESe"
 # 可通过 curl GET /api/cron/epidemic 手动触发
 [triggers]
 crons = ["*/30 * * * *"]
+
+[observability]
+[observability.logs]
+enabled = true
+invocation_logs = true
