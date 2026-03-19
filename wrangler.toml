@@ -1,0 +1,30 @@
+compatibility_date = "2024-09-23"
+compatibility_flags = ["nodejs_compat"]
+name = "covid-19"
+
+# Cloudflare D1 数据库
+[[d1_databases]]
+binding = "DB"
+database_id = "your-database-id-here"
+database_name = "covid19-db"
+
+# Cloudflare R2 存储（PDF、大文件）
+[[r2_buckets]]
+binding = "R2"
+bucket_name = "covid19-files"
+
+# 环境变量（非机密）
+[vars]
+EPIDEMIC_API_URL = "https://service-f9fjwngp-1252021671.bj.apigw.tencentcs.com/release/pneumonia"
+TURNSTILE_SITE_KEY = "0x4AAAAAACtWGQ8754ZRIESe"
+
+# 以下机密请勿写入此文件，应通过 wrangler secret put 设置：
+#   wrangler secret put TELEGRAM_BOT_TOKEN
+#   wrangler secret put TELEGRAM_CHAT_ID
+#   wrangler secret put TURNSTILE_SECRET_KEY
+#   wrangler secret put ADMIN_TOKEN_SECRET
+
+# 定时任务（每 30 分钟更新疫情数据）
+# 可通过 curl GET /api/cron/epidemic 手动触发
+[triggers]
+crons = ["*/30 * * * *"]

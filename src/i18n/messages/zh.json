@@ -1,0 +1,202 @@
+{
+  "app": {
+    "name": "covid-19.icu",
+    "slogan": [
+      "驰援一线",
+      "传递温暖"
+    ]
+  },
+  "home": {
+    "_name": "首页",
+    "title": "您是?",
+    "cardPrefix": "我是"
+  },
+  "people": {
+    "_name": "普通市民",
+    "_subtitle": "为普通市民准备的线上医疗诊断平台、线上心理咨询平台、信息看板与武汉在外人员住宿等信息"
+  },
+  "staff": {
+    "_name": "医护人员",
+    "_subtitle": "为医护人员准备的免费住宿、心理咨询平台与医疗机构物资需求提交系统"
+  },
+  "volunteer": {
+    "_name": "志愿者",
+    "_subtitle": "志愿者可实际使用的、经过多方验证后的医疗机构物资需求，以及可供各个志愿者使用的物资需求提交系统"
+  },
+  "menu": {
+    "languages": "语言选择",
+    "backHome": "回到欢迎界面"
+  },
+  "footer": {
+    "eula": "最终用户许可协议",
+    "privacy": "隐私声明",
+    "team": "wuhan.support 团队",
+    "source": "项目源代码",
+    "slogan": "这个世界并不完美，但我们正在让她更好"
+  },
+  "partials": {
+    "boolean": {
+      "true": "是",
+      "false": "否"
+    },
+    "have": {
+      "true": "有",
+      "false": "无"
+    },
+    "dialog": {
+      "cancel": "取消",
+      "confirm": "确认",
+      "submit": "提交",
+      "close": "关闭"
+    },
+    "level": {
+      "info": "信息",
+      "tips": "提示",
+      "success": "成功",
+      "warning": "警告",
+      "failed": "失败"
+    }
+  },
+  "nav": {
+    "peopleIndex": "市民信息主页",
+    "communitySupplies": "社区物资需求列表",
+    "communitySubmission": "提交社区物资需求",
+    "medicalPlatform": "线上医疗诊断平台",
+    "psychologicalPlatform": "线上心理咨询平台",
+    "peopleAccommodations": "武汉在外人员住宿",
+    "staffIndex": "医护人员信息主页",
+    "staffAccommodations": "医护人员免费住宿",
+    "staffPsychological": "线上心理咨询平台",
+    "staffSupplies": "医疗机构物资需求",
+    "staffSubmission": "提交医疗物资需求",
+    "volunteerIndex": "志愿者信息主页",
+    "volunteerSupplies": "医疗机构物资需求",
+    "volunteerSubmission": "提交医疗物资需求"
+  },
+  "accommodations": {
+    "title": "医护人员免费住宿",
+    "notice": "请注意：大多数住宿地点均要求各位携带相关证件（医护工作证 + 身份证）实名入住；请记得准备好上述证件后，致电相关住宿提供方确认空房情况哦～ 您辛苦啦～",
+    "filterAvailable": "只看有房",
+    "filterNoLinen": "不需自带三件套",
+    "bedsLeft": "剩余床位",
+    "roomsLeft": "剩余房间",
+    "contact": "联系方式",
+    "address": "地址",
+    "viewMap": "查看地图",
+    "report": "纠错",
+    "notes": "备注"
+  },
+  "supplies": {
+    "title": "医疗机构物资需求",
+    "submit": "提交物资需求",
+    "hospitalName": "医院名称",
+    "region": "所在地区",
+    "detailAddress": "详细地址",
+    "patients": "每天接待患者数量",
+    "beds": "医院床位数",
+    "contactName": "责任人姓名",
+    "contactOrg": "责任人所在单位或组织",
+    "contactPhone": "责任人联系方式",
+    "supplyName": "物资名称",
+    "supplyUnit": "数量单位",
+    "supplyNeed": "需求数量",
+    "supplyDaily": "每日消耗",
+    "supplyHave": "库存数量",
+    "supplyReq": "物资要求",
+    "pathways": "可接受的捐物资渠道",
+    "logistic": "物流状况",
+    "source": "需求信息数据来源",
+    "proof": "需求的官方证明",
+    "notes": "其他备注",
+    "addSupply": "添加物资",
+    "removeSupply": "移除"
+  },
+  "community": {
+    "title": "社区物资需求列表",
+    "subtitle": "为民众设置的社区物资需求列表，便于各民众发布自己的个人物资需求以便进行针对性帮助",
+    "submit": "提交物资需求",
+    "name": "姓名",
+    "age": "年龄",
+    "address": "详细地址",
+    "phone": "联系电话",
+    "agent": "代理人",
+    "agentPhone": "代理人电话",
+    "needVehicle": "是否需要车辆",
+    "medicalSupplies": "医疗物资需求",
+    "liveSupplies": "生活物资需求"
+  },
+  "platforms": {
+    "medical": {
+      "title": "线上医疗诊断平台",
+      "subtitle": "足不出户即可与众多知名医院专家连线进行远程诊疗"
+    },
+    "psychological": {
+      "title": "线上心理咨询平台",
+      "subtitle": "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式"
+    }
+  },
+  "dataTable": {
+    "search": "搜索",
+    "searchPlaceholder": "请输入 名称 / 地区 / 地址 进行搜索",
+    "filterByRegion": "按地区过滤：",
+    "geoSorted": "已按照最近距离排序列表",
+    "geoFailed": "定位失败，请确认是否开启浏览器及网站定位权限",
+    "noData": "十分抱歉，但现在暂时还没有相关记录",
+    "noResults": "没有查询到关键字 \"{query}\" 的结果",
+    "close": "关闭",
+    "retry": "重试"
+  },
+  "report": {
+    "title": "提交纠错",
+    "errorType": "错误类型",
+    "errorTypePlaceholder": "请选择错误类型",
+    "notice": "收到纠错请求后我们会再次审核此条信息以保证准确性。",
+    "warning": "注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！",
+    "causes": [
+      "信息不准确",
+      "信息已过期",
+      "联系方式错误",
+      "地址错误",
+      "其他"
+    ],
+    "submitted": "感谢支持，已提交纠错信息"
+  },
+  "verify": {
+    "title": "wuhan.support 证书验证",
+    "subtitle": "此页面验证由 wuhan.support 团队签发的志愿者证书的数字签名",
+    "details": {
+      "title": "证书详情",
+      "subtitle": "以下信息由签名中验证而得"
+    },
+    "field": {
+      "name": "姓名",
+      "group": "组别"
+    },
+    "statuses": [
+      {
+        "title": "正在验证...",
+        "subtitle": "正在进行签名验证"
+      },
+      {
+        "title": "验证通过 ✓",
+        "subtitle": "数字签名验证成功"
+      },
+      {
+        "title": "验证失败 ✗",
+        "subtitle": "签名不匹配"
+      },
+      {
+        "title": "参数缺失",
+        "subtitle": "缺少必要的验证参数"
+      }
+    ]
+  },
+  "error": {
+    "loadFailed": "数据加载失败",
+    "refresh": "刷新"
+  },
+  "description": {
+    "title": "关于",
+    "content": "新型冠状病毒肺炎（COVID-19）信息平台由 wuhan.support 团队开发维护，旨在为市民、医护人员和志愿者提供最新的、经过验证的信息服务。"
+  }
+}

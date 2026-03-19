@@ -1,0 +1,19 @@
+# 本地开发 secret 配置模板
+# 复制此文件为 .dev.vars 并填入真实值，.dev.vars 不会提交 git
+# wrangler dev/preview 会自动加载 .dev.vars 中的变量
+
+# Telegram 通知机器人（举报/提交通知）
+TELEGRAM_BOT_TOKEN=your-telegram-bot-token
+TELEGRAM_CHAT_ID=your-telegram-chat-id
+
+# Cloudflare Turnstile 服务端密钥（从 Cloudflare Dashboard 获取）
+TURNSTILE_SECRET_KEY=your-turnstile-secret-key
+
+# 管理員 Cookie 签名密钥（任意随机字符串，建议 32+ 位）
+# 生成示例：openssl rand -hex 32
+ADMIN_TOKEN_SECRET=your-random-secret-here
+
+# Cron 手动触发密钥（手动 curl /api/cron/epidemic 时需要）
+# Cloudflare Cron Trigger 自动调用时不需要此 secret
+# 生成示例：openssl rand -hex 32
+CRON_SECRET=your-cron-secret-here

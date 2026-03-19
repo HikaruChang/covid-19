@@ -1,0 +1,203 @@
+{
+  "app": {
+    "name": "covid-19.icu",
+    "slogan": [
+      "Science",
+      "Openness",
+      "Support"
+    ]
+  },
+  "home": {
+    "_name": "Home",
+    "title": "You are?",
+    "cardPrefix": "I am a "
+  },
+  "people": {
+    "_name": "Citizen",
+    "_subtitle": "Medical diagnosis platform, online psychological consultation platform, information kanban, accommodation for Wuhan citizens, etc."
+  },
+  "staff": {
+    "_name": "Medical Staff",
+    "_subtitle": "Free accommodation, psychological consultation platform and medical institution material demand submission system for medical staff"
+  },
+  "volunteer": {
+    "_name": "Volunteer",
+    "_subtitle": "The medical institution's material requirements that can be actually used by volunteers and verified by multiple parties"
+  },
+  "menu": {
+    "languages": "Language",
+    "backHome": "Back to Home"
+  },
+  "footer": {
+    "eula": "End-user License Agreement",
+    "privacy": "Privacy Policy",
+    "team": "wuhan.support Organization",
+    "source": "Source Code",
+    "slogan": "The world is not perfect, but we are making it better"
+  },
+  "partials": {
+    "boolean": {
+      "true": "Yes",
+      "false": "No"
+    },
+    "have": {
+      "true": "Have",
+      "false": "Not have"
+    },
+    "dialog": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "submit": "Submit",
+      "close": "Close"
+    },
+    "level": {
+      "info": "Info",
+      "tips": "Tips",
+      "success": "Success",
+      "warning": "Warning",
+      "failed": "Failed"
+    }
+  },
+  "nav": {
+    "peopleIndex": "Citizen Home",
+    "communitySupplies": "Community Supplies List",
+    "communitySubmission": "Submit Community Supplies",
+    "medicalPlatform": "Online Medical Platform",
+    "psychologicalPlatform": "Online Mental Health Platform",
+    "peopleAccommodations": "Accommodation for Wuhan Residents",
+    "staffIndex": "Medical Staff Home",
+    "staffAccommodations": "Free Accommodation",
+    "staffPsychological": "Online Mental Health Platform",
+    "staffSupplies": "Hospital Supply Needs",
+    "staffSubmission": "Submit Supply Needs",
+    "volunteerIndex": "Volunteer Home",
+    "volunteerSupplies": "Hospital Supply Needs",
+    "volunteerSubmission": "Submit Supply Needs"
+  },
+  "accommodations": {
+    "title": "Free Accommodation for Medical Staff",
+    "notice": "Please note: Most accommodation locations require valid ID and medical work permit for check-in. Please prepare these documents and call ahead to confirm availability.",
+    "filterAvailable": "Available only",
+    "filterNoLinen": "No linen required",
+    "bedsLeft": "beds left",
+    "roomsLeft": "rooms left",
+    "contact": "Contact",
+    "address": "Address",
+    "viewMap": "View Map",
+    "report": "Report Error",
+    "notes": "Notes"
+  },
+  "supplies": {
+    "title": "Hospital Supply Needs",
+    "submit": "Submit Supply Needs",
+    "hospitalName": "Hospital Name",
+    "region": "Region",
+    "detailAddress": "Detailed Address",
+    "patients": "Daily Patient Count",
+    "beds": "Hospital Beds",
+    "contactName": "Contact Person",
+    "contactOrg": "Organization",
+    "contactPhone": "Contact Phone",
+    "supplyName": "Supply Name",
+    "supplyUnit": "Unit",
+    "supplyNeed": "Quantity Needed",
+    "supplyDaily": "Daily Consumption",
+    "supplyHave": "Current Stock",
+    "supplyReq": "Requirements",
+    "pathways": "Accepted Donation Channels",
+    "logistic": "Logistics Status",
+    "source": "Data Source",
+    "proof": "Official Proof",
+    "notes": "Notes",
+    "addSupply": "Add Supply",
+    "removeSupply": "Remove"
+  },
+  "community": {
+    "title": "Community Supply Needs",
+    "subtitle": "A community supply needs list for citizens to publish their personal supply needs for targeted assistance",
+    "submit": "Submit Supply Needs",
+    "name": "Name",
+    "age": "Age",
+    "address": "Address",
+    "phone": "Phone",
+    "agent": "Agent Name",
+    "agentPhone": "Agent Phone",
+    "needVehicle": "Need Vehicle",
+    "medicalSupplies": "Medical Supplies",
+    "liveSupplies": "Living Supplies"
+  },
+  "platforms": {
+    "medical": {
+      "title": "Online Medical Platforms",
+      "subtitle": "Connect with experts from renowned hospitals for remote diagnosis"
+    },
+    "psychological": {
+      "title": "Online Mental Health Platforms",
+      "subtitle": "We provide free psychological consultation platform search including basic information and contact details"
+    }
+  },
+  "dataTable": {
+    "search": "Search",
+    "searchPlaceholder": "Search by name / region / address",
+    "filterByRegion": "Filter by region:",
+    "geoSorted": "Sorted by nearest distance",
+    "geoFailed": "Location failed, please check browser permissions",
+    "noData": "Sorry, there are no records available at this time",
+    "noResults": "No results found for \"{query}\"",
+    "close": "Close",
+    "retry": "Retry"
+  },
+  "report": {
+    "title": "Submit Correction",
+    "errorType": "Error Type",
+    "errorTypePlaceholder": "Select error type",
+    "notice": "After receiving the correction request, we will review this information again.",
+    "warning": "Note: Our human resources are limited, please do not abuse this feature. Thank you!",
+    "causes": [
+      "Inaccurate info",
+      "Outdated info",
+      "Wrong contact",
+      "Wrong address",
+      "Other"
+    ],
+    "submitted": "Thank you, correction submitted"
+  },
+  "verify": {
+    "title": "wuhan.support Certificate Verification",
+    "subtitle": "This page verifies the digital signature of volunteer certificates issued by wuhan.support",
+    "details": {
+      "title": "Certificate Details",
+      "subtitle": "The following information is verified from the signature"
+    },
+    "field": {
+      "name": "Name",
+      "group": "Group"
+    },
+    "statuses": [
+      {
+        "title": "Verifying...",
+        "subtitle": "Signature verification in progress"
+      },
+      {
+        "title": "Verified ✓",
+        "subtitle": "Digital signature verification passed"
+      },
+      {
+        "title": "Failed ✗",
+        "subtitle": "Signature mismatch"
+      },
+      {
+        "title": "Missing Arguments",
+        "subtitle": "One or more required parameters are missing"
+      }
+    ]
+  },
+  "error": {
+    "loadFailed": "Failed to load data",
+    "refresh": "Refresh"
+  },
+  "description": {
+    "title": "About",
+    "content": "The COVID-19 information platform is developed and maintained by the wuhan.support team, providing verified information services for citizens, medical staff, and volunteers."
+  }
+}
