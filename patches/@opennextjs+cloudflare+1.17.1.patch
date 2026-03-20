@@ -1,7 +1,16 @@
 diff --git a/node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js b/node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js
-index 4db9fee..123778c 100644
+index 4db9fee..b9af659 100644
 --- a/node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js
 +++ b/node_modules/@opennextjs/cloudflare/dist/cli/build/patches/plugins/load-manifest.js
+@@ -13,7 +13,7 @@ import { normalizePath } from "../../../utils/normalize-path.js";
+ export function inlineLoadManifest(updater, buildOpts) {
+     return updater.updateContent("inline-load-manifest", [
+         {
+-            filter: getCrossPlatformPathRegex(String.raw `/next/dist/server/load-manifest(\.external)?\.js$`, {
++            filter: getCrossPlatformPathRegex(String.raw`/next/dist/server/load-manifest(\.external)?\.js$`, {
+                 escape: false,
+             }),
+             contentFilter: /function loadManifest\(/,
 @@ -29,7 +29,7 @@ async function getLoadManifestRule(buildOpts) {
      const { outputDir } = buildOpts;
      const baseDir = join(outputDir, "server-functions/default", getPackagePath(buildOpts));
@@ -11,3 +20,35 @@ index 4db9fee..123778c 100644
          windowsPathsNoEscape: true,
      });
      const returnManifests = (await Promise.all(manifests.map(async (manifest) => `
+@@ -50,6 +50,9 @@ function loadManifest($PATH, $$$ARGS) {
+     return process.env.NEXT_BUILD_ID;
+ 	}
+   ${returnManifests}
++  // Fallback: if handleMissing is true, return empty object instead of throwing
++  const _args = [$$$ARGS];
++  if (_args[_args.length - 1]) return {};
+   throw new Error(\`Unexpected loadManifest(\${$PATH}) call!\`);
+ }`,
+     };
+@@ -63,9 +66,9 @@ async function getEvalManifestRule(buildOpts) {
+     });
+     const returnManifests = manifests
+         .map((manifest) => {
+-        const endsWith = normalizePath(relative(baseDir, manifest));
+-        const key = normalizePath("/" + relative(appDir, manifest)).replace("_client-reference-manifest.js", "");
+-        return `
++            const endsWith = normalizePath(relative(baseDir, manifest));
++            const key = normalizePath("/" + relative(appDir, manifest)).replace("_client-reference-manifest.js", "");
++            return `
+ if ($PATH.endsWith("${endsWith}")) {
+   require(${JSON.stringify(manifest)});
+   return {
+@@ -74,7 +77,7 @@ if ($PATH.endsWith("${endsWith}")) {
+     },
+   };
+ }`;
+-    })
++        })
+         .join("\n");
+     return {
+         rule: {
