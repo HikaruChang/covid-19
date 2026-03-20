@@ -4,7 +4,8 @@ import { isAdminAuthenticated, getAuthenticatedAdminId, hashPassword } from '@/l
 
 // GET /api/admin/admins - 列出所有管理員（不包含密碼雜湊）
 export async function GET() {
-  if (!(await isAdminAuthenticated())) {
+  const callerId = await getAuthenticatedAdminId();
+  if (callerId === null) {
     return NextResponse.json({ message: 'unauthorized' }, { status: 401 });
   }
 
@@ -12,7 +13,7 @@ export async function GET() {
   const { results } = await db
     .prepare('SELECT id, username, display_name, created_at, last_login_at FROM admins ORDER BY created_at ASC')
     .all();
-  return NextResponse.json({ data: results });
+  return NextResponse.json({ data: results, currentAdminId: callerId });
 }
 
 // POST /api/admin/admins - 新增管理員

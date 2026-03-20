@@ -26,9 +26,10 @@ interface TurnstileProps {
   siteKey: string;
   onVerify: (token: string) => void;
   onExpire?: () => void;
+  onError?: () => void;
 }
 
-export default function Turnstile({ siteKey, onVerify, onExpire }: TurnstileProps) {
+export default function Turnstile({ siteKey, onVerify, onExpire, onError }: TurnstileProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
 
@@ -38,9 +39,10 @@ export default function Turnstile({ siteKey, onVerify, onExpire }: TurnstileProp
       sitekey: siteKey,
       callback: onVerify,
       'expired-callback': () => onExpire?.(),
+      'error-callback': () => onError?.(),
       theme: 'auto',
     });
-  }, [siteKey, onVerify, onExpire]);
+  }, [siteKey, onVerify, onExpire, onError]);
 
   useEffect(() => {
     // Load the Turnstile script if not already present
@@ -52,6 +54,7 @@ export default function Turnstile({ siteKey, onVerify, onExpire }: TurnstileProp
     script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
     script.async = true;
     script.onload = () => renderWidget();
+    script.onerror = () => onError?.();
     document.head.appendChild(script);
 
     return () => {

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import {
   Box,
   Button,
@@ -45,6 +46,8 @@ const defaultSupplies: SupplyItem[] = [
 const emptySupply: SupplyItem = { name: '', unit: '', need: '', daily: '', have: '', requirements: '' };
 
 export default function HospitalSubmissionPage() {
+  const pathname = usePathname();
+  const backHref = pathname.startsWith('/staff') ? '/staff/supplies' : pathname.startsWith('/people') ? '/people/supplies' : '/volunteer/supplies';
   const [form, setForm] = useState({
     name: '',
     province: '',
@@ -130,8 +133,8 @@ export default function HospitalSubmissionPage() {
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button fullWidth href="/volunteer">
-            返回志愿者首页
+          <Button fullWidth href={backHref}>
+            返回物资列表
           </Button>
         </DialogActions>
       </Dialog>

@@ -36,6 +36,7 @@ interface Admin {
 
 export default function AdminsPage() {
   const [rows, setRows] = useState<Admin[]>([]);
+  const [currentAdminId, setCurrentAdminId] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [addOpen, setAddOpen] = useState(false);
@@ -52,8 +53,9 @@ export default function AdminsPage() {
     setError('');
     try {
       const res = await fetch('/api/admin/admins');
-      const json = await res.json() as { data: Admin[] };
+      const json = await res.json() as { data: Admin[]; currentAdminId?: number };
       setRows(json.data);
+      if (json.currentAdminId != null) setCurrentAdminId(json.currentAdminId);
     } catch {
       setError('載入失敗');
     } finally {
@@ -149,11 +151,13 @@ export default function AdminsPage() {
                     <TableCell>{row.last_login_at?.slice(0, 10) ?? '—'}</TableCell>
                     <TableCell>
                       <Stack direction="row" spacing={0.5}>
-                        <Tooltip title="修改密碼">
-                          <IconButton size="small" onClick={() => { setPwOpen(row.id); setPwValue(''); }}>
-                            <KeyIcon fontSize="small" />
-                          </IconButton>
-                        </Tooltip>
+                        {row.id === currentAdminId && (
+                          <Tooltip title="修改密碼">
+                            <IconButton size="small" onClick={() => { setPwOpen(row.id); setPwValue(''); }}>
+                              <KeyIcon fontSize="small" />
+                            </IconButton>
+                          </Tooltip>
+                        )}
                         <Tooltip title="刪除">
                           <IconButton size="small" color="error" onClick={() => handleDelete(row.id)}>
                             <DeleteIcon fontSize="small" />
