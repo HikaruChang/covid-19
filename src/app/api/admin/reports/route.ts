@@ -31,7 +31,7 @@ export async function DELETE(request: NextRequest) {
     return NextResponse.json({ message: 'unauthorized' }, { status: 401 });
   }
   const id = new URL(request.url).searchParams.get('id');
-  if (!id) return NextResponse.json({ message: 'missing id' }, { status: 400 });
+  if (!id || !/^\d+$/.test(id)) return NextResponse.json({ message: 'invalid id' }, { status: 400 });
 
   const db = getDB();
   await db.prepare('DELETE FROM reports WHERE id = ?').bind(id).run();

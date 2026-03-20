@@ -29,8 +29,8 @@ export async function POST(request: NextRequest) {
   if (body.username.length > 64 || (body.displayName && body.displayName.length > 128)) {
     return NextResponse.json({ message: '欄位過長' }, { status: 400 });
   }
-  if (body.password.length < 8) {
-    return NextResponse.json({ message: '密碼至少需要 8 個字元' }, { status: 422 });
+  if (body.password.length < 8 || body.password.length > 256) {
+    return NextResponse.json({ message: '密碼長度需在 8–256 個字元之間' }, { status: 422 });
   }
 
   const hash = await hashPassword(body.password);
@@ -56,7 +56,7 @@ export async function DELETE(request: NextRequest) {
   }
 
   const id = new URL(request.url).searchParams.get('id');
-  if (!id) return NextResponse.json({ message: 'missing id' }, { status: 400 });
+  if (!id || !/^\d+$/.test(id)) return NextResponse.json({ message: 'invalid id' }, { status: 400 });
 
   // 禁止刪除最後一個管理員
   const db = getDB();
@@ -78,15 +78,15 @@ export async function PATCH(request: NextRequest) {
   }
 
   const id = new URL(request.url).searchParams.get('id');
-  if (!id) return NextResponse.json({ message: 'missing id' }, { status: 400 });
+  if (!id || !/^\d+$/.test(id)) return NextResponse.json({ message: 'invalid id' }, { status: 400 });
 
   if (callerId !== parseInt(id, 10)) {
     return NextResponse.json({ message: '只能修改自己的密碼' }, { status: 403 });
   }
 
   const body = await request.json() as { password?: string };
-  if (!body.password || body.password.length < 8) {
-    return NextResponse.json({ message: '密碼至少需要 8 個字元' }, { status: 422 });
+  if (!body.password || body.password.length < 8 || body.password.length > 256) {
+    return NextResponse.json({ message: '密碼長度需在 8–256 個字元之間' }, { status: 422 });
   }
 
   const hash = await hashPassword(body.password);

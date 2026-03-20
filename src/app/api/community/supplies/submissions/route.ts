@@ -21,6 +21,13 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: 'bad request' }, { status: 400 });
   }
 
+  if (body.medicalSupplies && !Array.isArray(body.medicalSupplies)) {
+    return NextResponse.json({ message: 'medicalSupplies must be array' }, { status: 400 });
+  }
+  if (body.liveSupplies && !Array.isArray(body.liveSupplies)) {
+    return NextResponse.json({ message: 'liveSupplies must be array' }, { status: 400 });
+  }
+
   const MAX_ITEMS = 50;
   if ((body.medicalSupplies?.length ?? 0) > MAX_ITEMS || (body.liveSupplies?.length ?? 0) > MAX_ITEMS) {
     return NextResponse.json({ message: 'too many items' }, { status: 400 });

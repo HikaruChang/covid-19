@@ -3,7 +3,7 @@ import { getDB, getEnvVar } from '@/lib/bindings';
 import type { EpidemicApiProvince } from '@/types';
 
 // GET /api/cron/epidemic - 定时抓取疫情数据并更新 D1
-// 该路由可被 Cloudflare Cron Triggers 调用（Cron Triggers 会自动携带 cf-cron 头）
+// 该路由可被 Cloudflare Cron Triggers 调用（通过 x-cloudflare-cron 头识别）
 // 也可通过 Authorization: Bearer <CRON_SECRET> 手动触发
 export async function GET(request: NextRequest) {
   // 若非 Cloudflare Cron Trigger，要求 Authorization header

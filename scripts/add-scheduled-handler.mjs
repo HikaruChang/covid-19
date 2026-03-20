@@ -28,7 +28,7 @@ const scheduledExport = `
 // ---------------------------------------------------------------------------
 export async function scheduled(event, env, ctx) {
   // Use a placeholder URL – routing is determined by the path, not the host.
-  const request = new Request('https://covid-19.hikaru.workers.dev/api/cron/epidemic', {
+  const request = new Request('https://covid-19.rua.moe/api/cron/epidemic', {
     method: 'GET',
     headers: {
       // The cron route checks this header to bypass Bearer auth.
