@@ -41,26 +41,30 @@ export async function POST(request: NextRequest) {
 
   const supplyId = result.meta.last_row_id;
 
-  // 医疗物资
+  // 批量插入物资明细（原子操作）
+  const itemStmts: D1PreparedStatement[] = [];
   if (body.medicalSupplies) {
     for (const item of body.medicalSupplies) {
-      await db
-        .prepare(`INSERT INTO community_supply_items (community_supply_id, type, name, unit, need, daily, have, requirements)
+      itemStmts.push(
+        db.prepare(`INSERT INTO community_supply_items (community_supply_id, type, name, unit, need, daily, have, requirements)
           VALUES (?, 'medical', ?, ?, ?, ?, ?, ?)`)
-        .bind(supplyId, item.name, item.unit ?? '', item.need ?? '', item.daily ?? '', item.have ?? '', item.requirements ?? '')
-        .run();
+          .bind(supplyId, item.name, item.unit ?? '', item.need ?? '', item.daily ?? '', item.have ?? '', item.requirements ?? '')
+      );
     }
   }
 
-  // 生活物资
   if (body.liveSupplies) {
     for (const item of body.liveSupplies) {
-      await db
-        .prepare(`INSERT INTO community_supply_items (community_supply_id, type, name, unit, need, daily, have, requirements)
+      itemStmts.push(
+        db.prepare(`INSERT INTO community_supply_items (community_supply_id, type, name, unit, need, daily, have, requirements)
           VALUES (?, 'live', ?, ?, ?, ?, ?, ?)`)
-        .bind(supplyId, item.name, item.unit ?? '', item.need ?? '', item.daily ?? '', item.have ?? '', item.requirements ?? '')
-        .run();
+          .bind(supplyId, item.name, item.unit ?? '', item.need ?? '', item.daily ?? '', item.have ?? '', item.requirements ?? '')
+      );
     }
+  }
+
+  if (itemStmts.length > 0) {
+    await db.batch(itemStmts);
   }
 
   // 异步发送 Telegram 通知

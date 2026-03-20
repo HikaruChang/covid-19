@@ -24,9 +24,9 @@ import GppBadIcon from '@mui/icons-material/GppBad';
 
 interface HospitalSupply {
   id: number;
-  hospital_name: string;
+  name: string;
   city: string;
-  contact: string;
+  contact_phone: string;
   verified: number;
   created_at: string;
 }
@@ -106,9 +106,9 @@ export default function AdminHospitalSuppliesPage() {
                 {rows.map((row) => (
                   <TableRow key={row.id} hover>
                     <TableCell>{row.id}</TableCell>
-                    <TableCell>{row.hospital_name}</TableCell>
+                    <TableCell>{row.name}</TableCell>
                     <TableCell>{row.city}</TableCell>
-                    <TableCell>{row.contact}</TableCell>
+                    <TableCell>{row.contact_phone}</TableCell>
                     <TableCell>
                       <Chip
                         label={row.verified ? '已核實' : '未核實'}

@@ -51,7 +51,9 @@ export async function DELETE(request: NextRequest) {
   if (!id) return NextResponse.json({ message: 'missing id' }, { status: 400 });
 
   const db = getDB();
-  await db.prepare('DELETE FROM hospital_supply_items WHERE supply_id = ?').bind(id).run();
-  await db.prepare('DELETE FROM hospital_supplies WHERE id = ?').bind(id).run();
+  await db.batch([
+    db.prepare('DELETE FROM hospital_supply_items WHERE supply_id = ?').bind(id),
+    db.prepare('DELETE FROM hospital_supplies WHERE id = ?').bind(id),
+  ]);
   return NextResponse.json({ message: 'ok' });
 }

@@ -8,13 +8,26 @@ export async function GET() {
     .prepare('SELECT * FROM hospital_supplies WHERE verified = 1 ORDER BY created_at DESC')
     .all();
 
-  // 附加每个需求的物资明细
+  if (supplies.length === 0) return NextResponse.json([]);
+
+  // 批量查询所有物资明细，避免 N+1 问题
+  const ids = (supplies as Record<string, unknown>[]).map((s) => s.id);
+  const placeholders = ids.map(() => '?').join(',');
+  const { results: allItems } = await db
+    .prepare(`SELECT * FROM hospital_supply_items WHERE supply_id IN (${placeholders})`)
+    .bind(...ids)
+    .all();
+
+  // 按 supply_id 分组
+  const itemsBySupply = new Map<unknown, unknown[]>();
+  for (const item of allItems as Record<string, unknown>[]) {
+    const list = itemsBySupply.get(item.supply_id) ?? [];
+    list.push(item);
+    itemsBySupply.set(item.supply_id, list);
+  }
+
   for (const supply of supplies as Record<string, unknown>[]) {
-    const { results: items } = await db
-      .prepare('SELECT * FROM hospital_supply_items WHERE supply_id = ?')
-      .bind(supply.id)
-      .all();
-    supply.items = items;
+    supply.items = itemsBySupply.get(supply.id) ?? [];
   }
 
   return NextResponse.json(supplies);

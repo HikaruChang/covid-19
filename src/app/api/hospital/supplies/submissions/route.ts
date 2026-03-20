@@ -44,13 +44,14 @@ export async function POST(request: NextRequest) {
 
   const supplyId = result.meta.last_row_id;
 
-  // 插入物资明细
-  for (const item of body.supplies) {
-    await db
-      .prepare(`INSERT INTO hospital_supply_items (supply_id, name, unit, need, daily, have, requirements)
-        VALUES (?, ?, ?, ?, ?, ?, ?)`)
+  // 批量插入物资明细（原子操作）
+  const itemStmts = body.supplies.map((item) =>
+    db.prepare(`INSERT INTO hospital_supply_items (supply_id, name, unit, need, daily, have, requirements)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`)
       .bind(supplyId, item.name, item.unit, item.need, item.daily, item.have, item.requirements)
-      .run();
+  );
+  if (itemStmts.length > 0) {
+    await db.batch(itemStmts);
   }
 
   // 异步发送 Telegram 通知
