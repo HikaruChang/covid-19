@@ -16,6 +16,7 @@ import {
 } from '@mui/material';
 import Turnstile from '@/components/Turnstile';
 import api from '@/lib/api';
+import { useTranslations } from 'next-intl';
 
 interface ReportDialogProps {
   open: boolean;
@@ -26,22 +27,19 @@ interface ReportDialogProps {
   onSuccess?: () => void;
 }
 
-const defaultCauses = [
-  '信息不准确',
-  '信息已过期',
-  '联系方式错误',
-  '地址错误',
-  '其他',
-];
-
 export default function ReportDialog({
   open,
   onClose,
   content,
   type = 'general',
-  causes = defaultCauses,
+  causes,
   onSuccess,
 }: ReportDialogProps) {
+  const t = useTranslations('report');
+  const td = useTranslations('partials.dialog');
+  const defaultCauses = t.raw('causes') as string[];
+  const effectiveCauses = causes ?? defaultCauses;
+
   const [cause, setCause] = useState('');
   const [loading, setLoading] = useState(false);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
@@ -69,25 +67,25 @@ export default function ReportDialog({
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>提交纠错</DialogTitle>
+      <DialogTitle>{t('title')}</DialogTitle>
       <DialogContent>
         <FormControl fullWidth sx={{ mt: 1, mb: 2 }}>
-          <InputLabel>错误类型</InputLabel>
+          <InputLabel>{t('errorType')}</InputLabel>
           <Select
             value={cause}
-            label="错误类型"
+            label={t('errorType')}
             onChange={(e) => setCause(e.target.value)}
           >
-            {causes.map((c) => (
+            {effectiveCauses.map((c) => (
               <MenuItem key={c} value={c}>{c}</MenuItem>
             ))}
           </Select>
         </FormControl>
         <Typography variant="body2">
-          收到纠错请求后我们会再次审核此条信息以保证准确性。
+          {t('notice')}
         </Typography>
         <Typography variant="body2" color="error">
-          注意：我们的人力资源有限，烦请不要滥用此功能，十分感谢！
+          {t('warning')}
         </Typography>
         {siteKey && (
           <Turnstile
@@ -98,13 +96,13 @@ export default function ReportDialog({
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onClose}>{td('cancel')}</Button>
         <Button
           onClick={handleSubmit}
           disabled={!cause || loading || (!!siteKey && !turnstileToken)}
           color="primary"
         >
-          {loading ? <CircularProgress size={20} /> : '确认'}
+          {loading ? <CircularProgress size={20} /> : td('confirm')}
         </Button>
       </DialogActions>
     </Dialog>

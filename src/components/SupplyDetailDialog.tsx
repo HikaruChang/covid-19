@@ -13,6 +13,7 @@ import {
   Box,
 } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import { useTranslations } from 'next-intl';
 
 export interface SupplyDetailDialogProps {
   open: boolean;
@@ -25,9 +26,11 @@ export interface SupplyDetailDialogProps {
 function SupplyCard({
   supply,
   index,
+  t,
 }: {
   supply: any;
   index: number;
+  t: ReturnType<typeof useTranslations>;
 }) {
   return (
     <Card sx={{ border: '2px solid #cf5355', height: '100%' }}>
@@ -39,7 +42,7 @@ function SupplyCard({
           <strong>{supply.name || supply.n}</strong>
         </Typography>
         {supply.abbr && (
-          <Typography variant="body2">又名：{supply.abbr}</Typography>
+          <Typography variant="body2">{t('supplies.detail.alias')}：{supply.abbr}</Typography>
         )}
         {(supply.a !== undefined || supply.need) && (
           <Typography
@@ -54,7 +57,7 @@ function SupplyCard({
               : null}
             {supply.need && (
               <>
-                <Typography component="span" variant="body2">需要</Typography>{' '}
+                <Typography component="span" variant="body2">{t('supplies.detail.needed')}</Typography>{' '}
                 × {supply.need} {supply.unit || ''}
               </>
             )}
@@ -62,19 +65,19 @@ function SupplyCard({
         )}
         {supply.daily && (
           <Typography variant="h6" color="error" fontWeight={700}>
-            <Typography component="span" variant="body2">每日消耗</Typography>{' '}
+            <Typography component="span" variant="body2">{t('supplies.supplyDaily')}</Typography>{' '}
             × {supply.daily} {supply.unit || ''}
           </Typography>
         )}
         {supply.have && (
           <Typography variant="h6" color="error" fontWeight={700}>
-            <Typography component="span" variant="body2">现剩余</Typography>{' '}
+            <Typography component="span" variant="body2">{t('supplies.detail.remaining')}</Typography>{' '}
             × {supply.have} {supply.unit || ''}
           </Typography>
         )}
         {(supply.r || supply.requirements) && (
           <Typography variant="body2">
-            物资要求：<strong>{supply.r || supply.requirements}</strong>
+            {t('supplies.supplyReq')}：<strong>{supply.r || supply.requirements}</strong>
           </Typography>
         )}
       </CardContent>
@@ -89,13 +92,14 @@ export default function SupplyDetailDialog({
   item,
   type = 'hospital',
 }: SupplyDetailDialogProps) {
+  const t = useTranslations();
   const content = contentProp ?? item;
   if (!content) return null;
 
   const title =
     type === 'hospital'
-      ? '医疗机构物资需求 — 需求列表'
-      : '社区物资需求 — 需求详细信息';
+      ? t('supplies.detail.hospitalTitle')
+      : t('supplies.detail.communityTitle');
   const name = type === 'hospital' ? content.name : content.address;
 
   const hospitalSupplies = content.items || content.supplies || [];
@@ -123,7 +127,7 @@ export default function SupplyDetailDialog({
           <Grid container spacing={2}>
             {hospitalSupplies.map((s: any, i: number) => (
               <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={i}>
-                <SupplyCard supply={s} index={i} />
+                <SupplyCard supply={s} index={i} t={t} />
               </Grid>
             ))}
           </Grid>
@@ -134,12 +138,12 @@ export default function SupplyDetailDialog({
             {medicalSupplies.length > 0 && (
               <Box sx={{ mb: 3 }}>
                 <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-                  医疗物资需求
+                  {t('community.medicalSupplies')}
                 </Typography>
                 <Grid container spacing={2}>
                   {medicalSupplies.map((s: any, i: number) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={i}>
-                      <SupplyCard supply={s} index={i} />
+                      <SupplyCard supply={s} index={i} t={t} />
                     </Grid>
                   ))}
                 </Grid>
@@ -148,12 +152,12 @@ export default function SupplyDetailDialog({
             {liveSupplies.length > 0 && (
               <Box>
                 <Typography variant="subtitle2" color="text.secondary" sx={{ mb: 1 }}>
-                  生活物资需求
+                  {t('community.liveSupplies')}
                 </Typography>
                 <Grid container spacing={2}>
                   {liveSupplies.map((s: any, i: number) => (
                     <Grid item xs={12} sm={6} md={4} lg={3} xl={2} key={i}>
-                      <SupplyCard supply={s} index={i} />
+                      <SupplyCard supply={s} index={i} t={t} />
                     </Grid>
                   ))}
                 </Grid>
@@ -170,7 +174,7 @@ export default function SupplyDetailDialog({
           startIcon={<CloseIcon />}
           onClick={onClose}
         >
-          收起详细需求
+          {t('supplies.detail.collapse')}
         </Button>
       </DialogActions>
     </Dialog>

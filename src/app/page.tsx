@@ -19,39 +19,38 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 import DownloadIcon from '@mui/icons-material/Download';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 import Footer from '@/components/Footer';
+import { useTranslations } from 'next-intl';
 
-const roles = [
+const roleConfig = [
   {
     key: 'people',
     path: '/people',
     icon: <FaceIcon sx={{ fontSize: 72, color: '#fff' }} />,
-    title: '我是普通市民',
-    subtitle:
-      '为普通市民准备的线上医疗诊断平台、线上心理咨询平台、信息看板与武汉在外人员住宿等信息',
     banner: '/images/people.jpg',
   },
   {
     key: 'staff',
     path: '/staff',
     icon: <LocalHospitalIcon sx={{ fontSize: 72, color: '#fff' }} />,
-    title: '我是医护人员',
-    subtitle:
-      '为医护人员准备的免费住宿、心理咨询平台与医疗机构物资需求提交系统',
     banner: '/images/staff.jpg',
   },
   {
     key: 'volunteer',
     path: '/volunteer',
     icon: <VolunteerActivismIcon sx={{ fontSize: 72, color: '#fff' }} />,
-    title: '我是志愿者',
-    subtitle:
-      '志愿者可实际使用的、经过多方验证后的医疗机构物资需求，以及可供各个志愿者使用的物资需求提交系统',
     banner: '/images/volunteers-v3.jpg',
   },
 ];
 
 export default function HomePage() {
   const router = useRouter();
+  const t = useTranslations();
+
+  const roles = roleConfig.map((r) => ({
+    ...r,
+    title: t('home.cardPrefix') + t(`${r.key}._name`),
+    subtitle: t(`${r.key}._subtitle`),
+  }));
 
   return (
     <Box sx={{ bgcolor: '#f0f0f0', minHeight: '100vh' }}>
@@ -78,7 +77,7 @@ export default function HomePage() {
           fontWeight={700}
           sx={{ textAlign: 'center', mb: 2 }}
         >
-          驰援一线 · 传递温暖
+          {(t.raw('app.slogan') as string[]).join(' · ')}
         </Typography>
 
         <Divider sx={{ mb: 3 }} />
@@ -125,7 +124,7 @@ export default function HomePage() {
 
         {/* Role selection */}
         <Typography variant="h5" fontWeight={700} sx={{ textAlign: 'center', mb: 2 }}>
-          您是?
+          {t('home.title')}
         </Typography>
 
         <Grid container spacing={3}>

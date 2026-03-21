@@ -24,17 +24,16 @@ import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import DataTable from '@/components/DataTable';
 import ReportDialog from '@/components/ReportDialog';
 import api from '@/lib/api';
+import { useTranslations } from 'next-intl';
 
-const reportCauses = ['联系不上', '信息错误', '已下线', '信息重复', '其他'];
-
-function buildTags(el: any) {
+function buildTags(el: any, t: any) {
   const tags: { icon: React.ReactNode; color: string; text: string }[] = [];
-  if (el.onlineoffline?.includes('线上')) tags.push({ icon: <MonitorIcon fontSize="small" />, color: '#66bb6a', text: '线上' });
-  if (el.onlineoffline?.includes('线下')) tags.push({ icon: <PersonIcon fontSize="small" />, color: '#66bb6a', text: '线下' });
-  if (el.onlineoffline?.includes('电话')) tags.push({ icon: <PhoneIcon fontSize="small" />, color: '#4caf50', text: '电话' });
-  if (el.onlineoffline?.includes('网上')) tags.push({ icon: <LanguageIcon fontSize="small" />, color: '#4caf50', text: '网上' });
-  if (el.commercial?.includes('有偿')) tags.push({ icon: <AttachMoneyIcon fontSize="small" />, color: '#388e3c', text: '有偿' });
-  if (el.commercial?.includes('无偿')) tags.push({ icon: <MoneyOffIcon fontSize="small" />, color: '#388e3c', text: '无偿' });
+  if (el.onlineoffline?.includes('线上')) tags.push({ icon: <MonitorIcon fontSize="small" />, color: '#66bb6a', text: t('platforms.psychological.tags.online') });
+  if (el.onlineoffline?.includes('线下')) tags.push({ icon: <PersonIcon fontSize="small" />, color: '#66bb6a', text: t('platforms.psychological.tags.offline') });
+  if (el.onlineoffline?.includes('电话')) tags.push({ icon: <PhoneIcon fontSize="small" />, color: '#4caf50', text: t('platforms.psychological.tags.phone') });
+  if (el.onlineoffline?.includes('网上')) tags.push({ icon: <LanguageIcon fontSize="small" />, color: '#4caf50', text: t('platforms.psychological.tags.internet') });
+  if (el.commercial?.includes('有偿')) tags.push({ icon: <AttachMoneyIcon fontSize="small" />, color: '#388e3c', text: t('platforms.psychological.tags.paid') });
+  if (el.commercial?.includes('无偿')) tags.push({ icon: <MoneyOffIcon fontSize="small" />, color: '#388e3c', text: t('platforms.psychological.tags.free') });
   return tags;
 }
 
@@ -47,6 +46,8 @@ function regionalText(o: any) {
 }
 
 export default function PsychologicalPlatformsPage() {
+  const t = useTranslations();
+  const reportCauses = t.raw('platforms.psychological.reportCauses') as string[];
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState<{ open: boolean; content: string }>({
@@ -59,7 +60,7 @@ export default function PsychologicalPlatformsPage() {
   }, []);
 
   const renderItem = useCallback((item: any) => {
-    const tags = buildTags(item);
+    const tags = buildTags(item, t);
     return (
       <Card key={item.id} sx={{ borderTop: '4px solid rgba(104, 172, 91, 0.7)' }}>
         <CardHeader
@@ -78,13 +79,13 @@ export default function PsychologicalPlatformsPage() {
             ))}
           </Box>
           <Typography variant="subtitle1" fontWeight={700}>
-            开放时间：{item.opentime}
+            {t('platforms.psychological.openTime')}：{item.opentime}
           </Typography>
           <Typography variant="subtitle2" fontWeight={700}>
-            服务群体：{item.group || '无指定服务群体，所有人均可咨询'}
+            {t('platforms.psychological.targetGroup')}：{item.group || t('platforms.psychological.allWelcome')}
           </Typography>
           <Typography variant="subtitle1">
-            地方性：{item.regional}{regionalText(item)}
+            {t('platforms.psychological.regional')}：{item.regional}{regionalText(item)}
           </Typography>
           <Box
             sx={{
@@ -96,33 +97,33 @@ export default function PsychologicalPlatformsPage() {
               my: 1,
             }}
           >
-            咨询方式：{item.contact}
+            {t('platforms.psychological.contactMethod')}：{item.contact}
           </Box>
           {item.notes && (
-            <Typography variant="caption">备注：{item.notes}</Typography>
+            <Typography variant="caption">{t('accommodations.notes')}：{item.notes}</Typography>
           )}
         </CardContent>
         <Divider />
         <CardActions sx={{ justifyContent: 'space-between' }}>
           <Button size="small" href={item.source} target="_blank" startIcon={<OpenInNewIcon />}>
-            查看信息来源
+            {t('platforms.psychological.viewSource')}
           </Button>
           <Button
             size="small"
             startIcon={<ReportProblemIcon />}
             onClick={() => setReport({ open: true, content: JSON.stringify(item) })}
           >
-            信息纠错
+            {t('accommodations.report')}
           </Button>
         </CardActions>
       </Card>
     );
-  }, []);
+  }, [t]);
 
   if (loading && !data.length) {
     return (
       <Box sx={{ mx: 1 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>线上心理咨询平台</Typography>
+        <Typography variant="h5" fontWeight={700} gutterBottom>{t('platforms.psychological.title')}</Typography>
         {[1, 2, 3, 4].map((i) => <Skeleton key={i} variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 1 }} />)}
       </Box>
     );
@@ -130,17 +131,17 @@ export default function PsychologicalPlatformsPage() {
 
   return (
     <Box sx={{ mx: 1 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>线上心理咨询平台</Typography>
+      <Typography variant="h5" fontWeight={700} gutterBottom>{t('platforms.psychological.title')}</Typography>
       <Card sx={{ mb: 2 }} elevation={0}>
         <CardContent sx={{ bgcolor: '#4caf50', color: '#fff', fontWeight: 700, fontSize: '1rem' }}>
-          你好呀～我们这里给你准备了一些可以帮助到你的专业人员们；如果你觉得需要心理援助的话，请一定要联系他们哦！加油！❤️
+          {t('platforms.psychological.welcomeBanner')}
         </CardContent>
       </Card>
 
       <DataTable
         items={data}
         disableRegionSelector
-        searchText="平台名称、地区或咨询方式"
+        searchText={t('platforms.psychological.searchPlaceholder')}
         renderItem={renderItem}
       />
 

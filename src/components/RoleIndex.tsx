@@ -11,6 +11,7 @@ import {
   Typography,
 } from '@mui/material';
 import HomeDescription from './HomeDescription';
+import { useTranslations } from 'next-intl';
 
 interface RoleRoute {
   path: string;
@@ -28,6 +29,7 @@ interface RoleIndexProps {
 
 export default function RoleIndex({ title, routes }: RoleIndexProps) {
   const router = useRouter();
+  const t = useTranslations();
 
   return (
     <Box>
@@ -36,7 +38,7 @@ export default function RoleIndex({ title, routes }: RoleIndexProps) {
           variant="h4"
           sx={{ color: '#a20002', fontWeight: 900, letterSpacing: 2, mb: 2 }}
         >
-          covid-19.icu
+          {t('app.name')}
         </Typography>
       </Box>
       <Typography variant="h5" fontWeight={700} sx={{ textAlign: 'center', mb: 2 }}>
@@ -84,7 +86,7 @@ export default function RoleIndex({ title, routes }: RoleIndexProps) {
         variant="caption"
         sx={{ display: 'block', textAlign: 'center', mt: 2 }}
       >
-        下拉了解项目详情
+        {t('nav.scrollDown')}
       </Typography>
 
       <Divider sx={{ my: 3 }} />

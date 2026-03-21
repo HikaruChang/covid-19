@@ -2,8 +2,10 @@
 
 import { Box, Typography, Button, Divider } from '@mui/material';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { useTranslations } from 'next-intl';
 
 export default function Footer({ variant = 'default' }: { variant?: 'psychological' | 'default' }) {
+  const t = useTranslations('footer');
   const bgColor = variant === 'psychological' ? '#66bb6a' : '#eeeeee';
   return (
     <Box
@@ -16,7 +18,7 @@ export default function Footer({ variant = 'default' }: { variant?: 'psychologic
       }}
     >
       <Typography variant="overline" sx={{ mb: 2, display: 'block' }}>
-        驰援一线 · 传递温暖
+        {t('slogan')}
       </Typography>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, mb: 1 }}>
@@ -29,7 +31,7 @@ export default function Footer({ variant = 'default' }: { variant?: 'psychologic
           fontWeight={700}
           sx={{ textDecoration: 'none', color: 'inherit' }}
         >
-          最终用户许可协议
+          {t('eula')}
         </Typography>
         <Divider orientation="vertical" flexItem />
         <Typography
@@ -41,7 +43,7 @@ export default function Footer({ variant = 'default' }: { variant?: 'psychologic
           fontWeight={700}
           sx={{ textDecoration: 'none', color: 'inherit' }}
         >
-          隐私声明
+          {t('privacy')}
         </Typography>
       </Box>
 
@@ -52,7 +54,7 @@ export default function Footer({ variant = 'default' }: { variant?: 'psychologic
           rel="noopener"
           style={{ textDecoration: 'none', fontWeight: 700, color: 'inherit' }}
         >
-          wuhan.support 团队
+          {t('team')}
         </a>
       </Typography>
 
@@ -64,7 +66,7 @@ export default function Footer({ variant = 'default' }: { variant?: 'psychologic
         startIcon={<GitHubIcon />}
         sx={{ mt: 1 }}
       >
-        项目源代码
+        {t('source')}
       </Button>
     </Box>
   );

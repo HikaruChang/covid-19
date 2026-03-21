@@ -25,9 +25,11 @@ import ReportDialog from '@/components/ReportDialog';
 import ContactDialog from '@/components/ContactDialog';
 import SupplyDetailDialog from '@/components/SupplyDetailDialog';
 import api from '@/lib/api';
+import { useTranslations } from 'next-intl';
 
 export default function CommunitySuppliesPage() {
   const router = useRouter();
+  const t = useTranslations();
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [snackbar, setSnackbar] = useState(false);
@@ -53,7 +55,7 @@ export default function CommunitySuppliesPage() {
         onClose={() => setSnackbar(false)}
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
       >
-        <Alert severity="success">感谢支持，已提交纠错信息</Alert>
+        <Alert severity="success">{t('report.submitted')}</Alert>
       </Snackbar>
 
       <ReportDialog
@@ -78,12 +80,12 @@ export default function CommunitySuppliesPage() {
       />
 
       <Typography variant="h5" fontWeight={700} gutterBottom>
-        社区物资需求列表
+        {t('community.title')}
       </Typography>
 
       <Card sx={{ mb: 2 }} elevation={0}>
         <CardContent sx={{ bgcolor: '#ff9800', color: '#fff', fontWeight: 700 }}>
-          本列表中信息均为各用户自行上传，请自行验证真伪。
+          {t('community.notice')}
         </CardContent>
       </Card>
 
@@ -112,10 +114,10 @@ export default function CommunitySuppliesPage() {
                       <Typography variant="subtitle1" sx={{ mt: 1 }}>
                         {o.province} {o.city}
                       </Typography>
-                      <Typography variant="body2">地址：{o.address}</Typography>
+                      <Typography variant="body2">{t('accommodations.address')}：{o.address}</Typography>
                       {o.notes && (
                         <Typography variant="caption" color="warning.main">
-                          备注：{o.notes}
+                          {t('accommodations.notes')}：{o.notes}
                         </Typography>
                       )}
                     </CardContent>
@@ -127,7 +129,7 @@ export default function CommunitySuppliesPage() {
                         target="_blank"
                         startIcon={<MapIcon />}
                       >
-                        查看地图
+                        {t('accommodations.viewMap')}
                       </Button>
                       <Button
                         size="small"
@@ -137,8 +139,8 @@ export default function CommunitySuppliesPage() {
                             address: o.address,
                             contacts: [
                               {
-                                name: o.name || '(姓名未知)',
-                                content: `电话：${o.contact_phone || '(未知)'}`,
+                                name: o.name || t('community.unknownName'),
+                                content: `${t('community.phoneLabel')}：${o.contact_phone || t('community.unknownPhone')}`,
                                 link: o.contact_phone ? { href: `tel://${o.contact_phone}` } : null,
                               },
                             ],
@@ -146,7 +148,7 @@ export default function CommunitySuppliesPage() {
                           setContactOpen(true);
                         }}
                       >
-                        联系方式
+                        {t('accommodations.contact')}
                       </Button>
                       <Button
                         size="small"
@@ -156,7 +158,7 @@ export default function CommunitySuppliesPage() {
                           setReportOpen(true);
                         }}
                       >
-                        纠错
+                        {t('accommodations.report')}
                       </Button>
                     </CardActions>
                     <Divider />
@@ -170,7 +172,7 @@ export default function CommunitySuppliesPage() {
                           setSupplyOpen(true);
                         }}
                       >
-                        展开详细需求
+                        {t('supplies.expandDetails')}
                       </Button>
                     </CardActions>
                   </Card>

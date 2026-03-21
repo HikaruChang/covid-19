@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@mui/material';
 import TranslateIcon from '@mui/icons-material/Translate';
+import { useTranslations } from 'next-intl';
 
 const locales = [
   { id: 'zh', name: '中文' },
@@ -18,6 +19,7 @@ const locales = [
 
 export default function LocaleSwitcher() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const t = useTranslations('menu');
 
   const handleSelect = async (localeId: string) => {
     setAnchorEl(null);
@@ -41,7 +43,7 @@ export default function LocaleSwitcher() {
       >
         <ListSubheader sx={{ lineHeight: '36px' }}>
           <TranslateIcon sx={{ fontSize: 14, mr: 0.5, color: 'grey.400' }} />
-          语言选择
+          {t('languages')}
         </ListSubheader>
         {locales.map((loc) => (
           <MenuItem key={loc.id} onClick={() => handleSelect(loc.id)}>

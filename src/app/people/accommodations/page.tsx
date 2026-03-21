@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import {
   Box,
   Button,
@@ -18,18 +19,9 @@ import DataTable from '@/components/DataTable';
 import ReportDialog from '@/components/ReportDialog';
 import api from '@/lib/api';
 
-const reportCauses = [
-  '地址不存在/未找到',
-  '联系不上',
-  '已被征用',
-  '已住满',
-  '其他原因无法接待',
-  '缺少必需物资无法营业',
-  '信息重复',
-  '其他',
-];
-
 export default function PeopleAccommodationsPage() {
+  const t = useTranslations();
+  const reportCauses = t.raw('accommodations.reportCauses') as string[];
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState<{ open: boolean; content: string }>({
@@ -57,18 +49,18 @@ export default function PeopleAccommodationsPage() {
       />
       <CardContent sx={{ pt: 0 }}>
         {item.status && (
-          <Typography variant="subtitle1" fontWeight={700}>状态：{item.status}</Typography>
+          <Typography variant="subtitle1" fontWeight={700}>{t('accommodations.status')}：{item.status}</Typography>
         )}
         <Typography variant="subtitle2" sx={{ mb: 1 }}>
-          {item.province} {item.city} {item.suburb}；地址：{item.address || '暂无。可点击下方【查看地图】前往查看地址'}
+          {item.province} {item.city} {item.suburb}；{t('accommodations.address')}：{item.address || t('accommodations.noAddress')}
         </Typography>
         {item.tags && (
           <Typography variant="subtitle2">
-            备注：{item.tags} {item.conditions || ''}
+            {t('accommodations.notes')}：{item.tags} {item.conditions || ''}
           </Typography>
         )}
         <Typography variant="subtitle2">
-          联系电话：{item.phone || '暂无。可点击下方【查看地图】前往查看电话'}
+          {t('accommodations.phone')}：{item.phone || t('accommodations.noPhone')}
         </Typography>
       </CardContent>
       <Divider />
@@ -79,14 +71,14 @@ export default function PeopleAccommodationsPage() {
           target="_blank"
           startIcon={<MapIcon />}
         >
-          查看地图
+          {t('accommodations.viewMap')}
         </Button>
         <Button
           size="small"
           startIcon={<ReportProblemIcon />}
           onClick={() => setReport({ open: true, content: JSON.stringify(item) })}
         >
-          信息纠错
+          {t('accommodations.report')}
         </Button>
       </CardActions>
     </Card>
@@ -95,7 +87,7 @@ export default function PeopleAccommodationsPage() {
   if (loading && !data.length) {
     return (
       <Box sx={{ mx: 1 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>武汉在外人员住宿</Typography>
+        <Typography variant="h5" fontWeight={700} gutterBottom>{t('accommodations.peopleTitle')}</Typography>
         {[1, 2, 3, 4].map((i) => <Skeleton key={i} variant="rectangular" height={160} sx={{ mb: 2, borderRadius: 1 }} />)}
       </Box>
     );
@@ -103,11 +95,11 @@ export default function PeopleAccommodationsPage() {
 
   return (
     <Box sx={{ mx: 1 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>武汉在外人员住宿</Typography>
+      <Typography variant="h5" fontWeight={700} gutterBottom>{t('accommodations.peopleTitle')}</Typography>
 
       <DataTable
         items={dataset}
-        searchText="住宿名称、地址"
+        searchText={t('accommodations.searchPlaceholder')}
         renderItem={renderItem}
       />
 

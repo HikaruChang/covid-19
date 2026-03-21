@@ -20,6 +20,7 @@ import MapIcon from '@mui/icons-material/Map';
 import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import PhoneIcon from '@mui/icons-material/Phone';
 import { Contact, contacts as parseContacts } from '@/lib/strings';
+import { useTranslations } from 'next-intl';
 
 export interface ContactDialogProps {
   open: boolean;
@@ -39,13 +40,14 @@ export default function ContactDialog({
   contactContent,
 }: ContactDialogProps) {
   const [showRaw, setShowRaw] = useState(false);
+  const t = useTranslations();
   const contacts = contactsProp ?? (contactName || contactContent ? parseContacts(contactName, contactContent) : []);
   const rawName = contactName ?? contactsProp?.map((c) => c.name).join(', ') ?? '';
   const rawContent = contactContent ?? contactsProp?.map((c) => c.content).join(', ') ?? '';
 
   return (
     <Dialog open={open} onClose={onClose} maxWidth="sm" fullWidth>
-      <DialogTitle>联系方式</DialogTitle>
+      <DialogTitle>{t('accommodations.contact')}</DialogTitle>
       <DialogContent>
         <List>
           <ListItemButton
@@ -59,7 +61,7 @@ export default function ContactDialog({
                 <MapIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary="地址" secondary={address} />
+            <ListItemText primary={t('accommodations.address')} secondary={address} />
           </ListItemButton>
 
           {contacts.map((c, i) => (
@@ -85,17 +87,17 @@ export default function ContactDialog({
           onClick={() => setShowRaw((v) => !v)}
           sx={{ mt: 1 }}
         >
-          {showRaw ? '收起' : '排版有误？'}
+          {showRaw ? t('contact.collapse') : t('contact.formatError')}
         </Button>
         <Collapse in={showRaw}>
           <Divider sx={{ my: 1.5 }} />
-          <Typography variant="subtitle1">以下是未经排版的数据</Typography>
-          <Typography variant="body2">联系人：{rawName}</Typography>
-          <Typography variant="body2">电话：{rawContent}</Typography>
+          <Typography variant="subtitle1">{t('contact.rawDataTitle')}</Typography>
+          <Typography variant="body2">{t('contact.contactPerson')}：{rawName}</Typography>
+          <Typography variant="body2">{t('contact.phone')}：{rawContent}</Typography>
         </Collapse>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>关闭</Button>
+        <Button onClick={onClose}>{t('partials.dialog.close')}</Button>
       </DialogActions>
     </Dialog>
   );

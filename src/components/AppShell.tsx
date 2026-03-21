@@ -33,19 +33,20 @@ import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
 import { useAppContext } from './Providers';
 import LocaleSwitcher from './LocaleSwitcher';
+import { useTranslations } from 'next-intl';
 
 const DRAWER_WIDTH = 254;
 
 interface NavChild {
   path: string;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
   hide?: boolean;
 }
 
 interface NavSection {
   key: string;
-  label: string;
+  labelKey: string;
   icon: React.ReactNode;
   basePath: string;
   children: NavChild[];
@@ -54,40 +55,40 @@ interface NavSection {
 const sections: NavSection[] = [
   {
     key: 'people',
-    label: '普通市民',
+    labelKey: 'people._name',
     icon: <FaceIcon />,
     basePath: '/people',
     children: [
-      { path: '/people', label: '市民信息主页', icon: <HomeIcon /> },
-      { path: '/people/supplies', label: '社区物资需求列表', icon: <SearchIcon /> },
-      { path: '/people/supplies/submit', label: '提交社区物资需求', icon: <NoteAddIcon /> },
-      { path: '/people/platforms/medical', label: '线上医疗诊断平台', icon: <LocalHospitalIcon /> },
-      { path: '/people/platforms/psychological', label: '线上心理咨询平台', icon: <FavoriteIcon /> },
-      { path: '/people/accommodations', label: '武汉在外人员住宿', icon: <HotelIcon /> },
+      { path: '/people', labelKey: 'nav.peopleIndex', icon: <HomeIcon /> },
+      { path: '/people/supplies', labelKey: 'nav.communitySupplies', icon: <SearchIcon /> },
+      { path: '/people/supplies/submit', labelKey: 'nav.communitySubmission', icon: <NoteAddIcon /> },
+      { path: '/people/platforms/medical', labelKey: 'nav.medicalPlatform', icon: <LocalHospitalIcon /> },
+      { path: '/people/platforms/psychological', labelKey: 'nav.psychologicalPlatform', icon: <FavoriteIcon /> },
+      { path: '/people/accommodations', labelKey: 'nav.peopleAccommodations', icon: <HotelIcon /> },
     ],
   },
   {
     key: 'staff',
-    label: '医护人员',
+    labelKey: 'staff._name',
     icon: <LocalHospitalIcon />,
     basePath: '/staff',
     children: [
-      { path: '/staff', label: '医护人员信息主页', icon: <HomeIcon /> },
-      { path: '/staff/accommodations', label: '医护人员免费住宿', icon: <HotelIcon /> },
-      { path: '/staff/platforms/psychological', label: '线上心理咨询平台', icon: <FavoriteIcon /> },
-      { path: '/staff/supplies', label: '医疗机构物资需求', icon: <SearchIcon /> },
-      { path: '/staff/supplies/submit', label: '提交医疗物资需求', icon: <NoteAddIcon /> },
+      { path: '/staff', labelKey: 'nav.staffIndex', icon: <HomeIcon /> },
+      { path: '/staff/accommodations', labelKey: 'nav.staffAccommodations', icon: <HotelIcon /> },
+      { path: '/staff/platforms/psychological', labelKey: 'nav.staffPsychological', icon: <FavoriteIcon /> },
+      { path: '/staff/supplies', labelKey: 'nav.staffSupplies', icon: <SearchIcon /> },
+      { path: '/staff/supplies/submit', labelKey: 'nav.staffSubmission', icon: <NoteAddIcon /> },
     ],
   },
   {
     key: 'volunteer',
-    label: '志愿者',
+    labelKey: 'volunteer._name',
     icon: <VolunteerActivismIcon />,
     basePath: '/volunteer',
     children: [
-      { path: '/volunteer', label: '志愿者信息主页', icon: <HomeIcon /> },
-      { path: '/volunteer/supplies', label: '医疗机构物资需求', icon: <SearchIcon /> },
-      { path: '/volunteer/supplies/submit', label: '提交医疗物资需求', icon: <NoteAddIcon /> },
+      { path: '/volunteer', labelKey: 'nav.volunteerIndex', icon: <HomeIcon /> },
+      { path: '/volunteer/supplies', labelKey: 'nav.volunteerSupplies', icon: <SearchIcon /> },
+      { path: '/volunteer/supplies/submit', labelKey: 'nav.volunteerSubmission', icon: <NoteAddIcon /> },
     ],
   },
 ];
@@ -96,6 +97,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
   const { error, setError } = useAppContext();
+  const t = useTranslations();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
 
@@ -104,12 +106,12 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
   const currentTitle = useMemo(() => {
     for (const section of sections) {
       for (const child of section.children) {
-        if (child.path === pathname) return child.label;
+        if (child.path === pathname) return t(child.labelKey);
       }
     }
-    if (pathname === '/verify') return 'wuhan.support 证书验证';
+    if (pathname === '/verify') return t('verify.title');
     return 'covid-19.icu';
-  }, [pathname]);
+  }, [pathname, t]);
 
   const toggleSection = (key: string) => {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -136,7 +138,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <ChevronLeftIcon />
           </ListItemIcon>
           <ListItemText
-            primary="回到欢迎界面"
+            primary={t('menu.backHome')}
             primaryTypographyProps={{ fontWeight: 700 }}
           />
         </ListItemButton>
@@ -148,7 +150,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
             <Box key={section.key}>
               <ListItemButton onClick={() => toggleSection(section.key)}>
                 <ListItemIcon>{section.icon}</ListItemIcon>
-                <ListItemText primary={section.label} />
+                <ListItemText primary={t(section.labelKey)} />
                 {isOpen ? <ExpandLess /> : <ExpandMore />}
               </ListItemButton>
               <Collapse in={isOpen} timeout="auto" unmountOnExit>
@@ -176,7 +178,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                           {child.icon}
                         </ListItemIcon>
                         <ListItemText
-                          primary={child.label}
+                          primary={t(child.labelKey)}
                           primaryTypographyProps={{
                             fontSize: 14,
                             fontWeight: pathname === child.path ? 700 : 400,
@@ -247,6 +249,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
         sx={{
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { width: DRAWER_WIDTH },
+          zIndex: (t) => (t.zIndex.drawer as number) + 2,
         }}
       >
         {drawerContent}

@@ -17,6 +17,7 @@ import MyLocationIcon from '@mui/icons-material/MyLocation';
 import PlaceSelector from './PlaceSelector';
 import Paginator from './Paginator';
 import { locate, distance } from '@/lib/geo';
+import { useTranslations } from 'next-intl';
 
 const ITEMS_PER_PAGE = 24;
 
@@ -59,11 +60,13 @@ export default function DataTable({
   items,
   enableGeolocation = false,
   disableRegionSelector = false,
-  searchText = '请输入 名称 / 地区 / 地址 进行搜索',
+  searchText,
   children,
   renderItem,
   gridLayout = false,
 }: DataTableProps) {
+  const t = useTranslations('dataTable');
+  const effectiveSearchText = searchText ?? t('searchPlaceholder');
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const [region, setRegion] = useState<string[]>([]);
@@ -173,7 +176,7 @@ export default function DataTable({
       {!disableRegionSelector && (
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
           <Typography variant="subtitle2" sx={{ mr: 1, whiteSpace: 'nowrap' }}>
-            按地区过滤：
+            {t('filterByRegion')}
           </Typography>
           <PlaceSelector
             value={region}
@@ -188,26 +191,26 @@ export default function DataTable({
 
       {hasLocation && (
         <Alert severity="success" sx={{ mb: 1 }}>
-          已按照最近距离排序列表{' '}
+          {t('geoSorted')}{' '}
           <Button
             size="small"
             variant="outlined"
             onClick={() => setGeo({ lat: null, lng: null, determining: false, failed: false })}
           >
-            关闭
+            {t('close')}
           </Button>
         </Alert>
       )}
       {geo.failed && (
         <Alert severity="error" sx={{ mb: 1 }}>
-          定位失败，请确认是否开启浏览器及网站定位权限{' '}
+          {t('geoFailed')}{' '}
           <Button
             size="small"
             variant="outlined"
             onClick={doGeolocate}
             disabled={geo.determining}
           >
-            重试
+            {t('retry')}
           </Button>
         </Alert>
       )}
@@ -218,8 +221,8 @@ export default function DataTable({
           setSearch(e.target.value);
           setPage(1);
         }}
-        placeholder={searchText}
-        label="搜索"
+        placeholder={effectiveSearchText}
+        label={t('search')}
         size="small"
         fullWidth
         sx={{ mb: 2 }}
@@ -257,12 +260,12 @@ export default function DataTable({
 
       {data.length === 0 && !search && (
         <Alert severity="info" variant="outlined" sx={{ my: 2 }}>
-          十分抱歉，但现在暂时还没有相关记录
+          {t('noData')}
         </Alert>
       )}
       {data.length === 0 && search && (
         <Alert severity="info" variant="outlined" sx={{ my: 2 }}>
-          没有查询到关键字 &ldquo;{search}&rdquo; 的结果
+          {t('noResults', { query: search })}
         </Alert>
       )}
 

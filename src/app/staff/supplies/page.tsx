@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
+import { useTranslations } from 'next-intl';
 import {
   Box,
   Button,
@@ -25,16 +26,7 @@ import ContactDialog from '@/components/ContactDialog';
 import SupplyDetailDialog from '@/components/SupplyDetailDialog';
 import api from '@/lib/api';
 
-const reportCauses = [
-  '地址不存在/未找到',
-  '联系不上医院方',
-  '物资被拒收或拦截',
-  '物资已够用',
-  '信息重复',
-  '其他',
-];
-
-function processData(raw: any[]): any[] {
+function processData(raw: any[], t: (key: any, values?: any) => string): any[] {
   return raw
     .map((el) => {
       const tags: { c: string; t: string }[] = [];
@@ -43,24 +35,24 @@ function processData(raw: any[]): any[] {
       // trueness tags
       if (el.trueness && !el.trueness.includes('未') && !el.trueness.includes('需确认')) {
         if (el.trueness === '已核实' || el.trueness === '核实') {
-          tags.push({ c: '#4caf50', t: '已核实' });
+          tags.push({ c: '#4caf50', t: t('supplies.tags.verified') });
         } else {
-          tags.push({ c: '#4caf50', t: `已核实：${el.trueness}` });
+          tags.push({ c: '#4caf50', t: t('supplies.tags.verifiedBy', { by: el.trueness }) });
         }
         meta.trueness = 0;
       } else if (el.trueness) {
         tags.push({ c: '#9e9e9e', t: el.trueness });
       } else {
-        tags.push({ c: '#9e9e9e', t: '暂未与官方核实' });
+        tags.push({ c: '#9e9e9e', t: t('supplies.tags.unverified') });
       }
 
       // urge tags
       const urge = el.urge || '';
       if (urge === '裸奔') {
-        tags.push({ c: '#c62828', t: '非常紧急：库存为零' });
+        tags.push({ c: '#c62828', t: t('supplies.tags.criticalNoStock') });
         meta.urge = 0;
       } else if (urge === '紧缺') {
-        tags.push({ c: '#f44336', t: '紧缺' });
+        tags.push({ c: '#f44336', t: t('supplies.tags.shortage') });
         meta.urge = 1;
       } else if (urge) {
         tags.push({ c: '#ff5722', t: urge });
@@ -85,6 +77,8 @@ function processData(raw: any[]): any[] {
 }
 
 export default function HospitalSuppliesPage() {
+  const t = useTranslations();
+  const reportCauses = t.raw('supplies.reportCauses') as string[];
   const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [report, setReport] = useState<{ open: boolean; content: string }>({ open: false, content: '' });
@@ -94,7 +88,7 @@ export default function HospitalSuppliesPage() {
   const [detail, setDetail] = useState<{ open: boolean; item: any }>({ open: false, item: null });
 
   useEffect(() => {
-    api.supplies().then((d) => { setData(processData(d)); setLoading(false); });
+    api.supplies().then((d) => { setData(processData(d, t)); setLoading(false); });
   }, []);
 
   const urgeBgColor = (urge: number) => {
@@ -124,15 +118,15 @@ export default function HospitalSuppliesPage() {
             title={
               <Typography variant="h6" fontWeight={900}>
                 <Typography component="span" variant="body2">#{index + 1}</Typography>{' '}
-                {item.urge === '裸奔' ? '[库存为零] ' : ''}{item.name}
+                {item.urge === '裸奔' ? `${t('supplies.noStock')} ` : ''}{item.name}
               </Typography>
             }
           />
           {/* Surplus info + background icon */}
           <Box sx={{ position: 'relative' }}>
             <Box sx={{ position: 'absolute', top: -48, right: 8, textAlign: 'right', fontSize: '0.75rem', color: item.meta.urge <= 1 ? '#ffffff99' : 'text.secondary' }}>
-              {supplies.length > 0 && <Box><strong>{supplies.length}种</strong> 种类</Box>}
-              {item.suppliesCount > 0 && <Box><strong>{item.suppliesCount}{item.suppliesCountBias ? '+' : ''}</strong> 数量</Box>}
+              {supplies.length > 0 && <Box><strong>{t('supplies.kindCount', { count: supplies.length })}</strong></Box>}
+              {item.suppliesCount > 0 && <Box><strong>{item.suppliesCount}{item.suppliesCountBias ? '+' : ''}</strong> {t('supplies.quantity')}</Box>}
             </Box>
             <LocalHospitalIcon sx={{ position: 'absolute', top: -40, right: 4, fontSize: 80, opacity: 0.06, color: '#333' }} />
           </Box>
@@ -147,27 +141,27 @@ export default function HospitalSuppliesPage() {
             )}
             <Typography variant="subtitle1">{item.province} {item.city}</Typography>
             <Typography variant="subtitle2">
-              地址：{item.address || '（暂无详细地址，可点击下方搜索）'}
+              {t('accommodations.address')}：{item.address || t('supplies.noAddressHint')}
             </Typography>
-            {item.alert && <Typography variant="caption" color="error">特别备注：{item.alert}</Typography>}
-            {item.notes && <Typography variant="caption" sx={{ color: '#ff5722', display: 'block' }}>备注：{item.notes}</Typography>}
+            {item.alert && <Typography variant="caption" color="error">{t('supplies.specialNote')}：{item.alert}</Typography>}
+            {item.notes && <Typography variant="caption" sx={{ color: '#ff5722', display: 'block' }}>{t('accommodations.notes')}：{item.notes}</Typography>}
           </CardContent>
 
           <Divider />
           <CardActions sx={{ justifyContent: 'space-between', flexWrap: 'wrap' }}>
             <Button size="small" href={`https://ditu.amap.com/search?query=${encodeURIComponent(item.name)}`} target="_blank" startIcon={<MapIcon />}>
-              {item.address ? '查看' : '搜索'}地图
+              {t('accommodations.viewMap')}
             </Button>
             <Button size="small" startIcon={<ContactPhoneIcon />} onClick={() => setContact({
               open: true,
-              address: item.address || '暂无详细地址，可点击搜索',
+              address: item.address || t('supplies.noAddressShort'),
               contactName: item.contact || '',
               contactContent: item.phone || '',
             })}>
-              联系方式
+              {t('accommodations.contact')}
             </Button>
             <Button size="small" startIcon={<ReportProblemIcon />} onClick={() => setReport({ open: true, content: JSON.stringify(item) })}>
-              信息纠错
+              {t('accommodations.report')}
             </Button>
           </CardActions>
           <Divider />
@@ -180,7 +174,7 @@ export default function HospitalSuppliesPage() {
               disabled={!supplies.length}
               onClick={() => setDetail({ open: true, item })}
             >
-              展开详细需求{supplies.length ? '' : ' (无需求数据)'}
+              {t('supplies.expandDetails')}{supplies.length ? '' : t('supplies.noSupplyData')}
             </Button>
           </CardActions>
         </Card>
@@ -191,7 +185,7 @@ export default function HospitalSuppliesPage() {
   if (loading && !data.length) {
     return (
       <Box sx={{ mx: 1 }}>
-        <Typography variant="h5" fontWeight={700} gutterBottom>医疗机构物资需求</Typography>
+        <Typography variant="h5" fontWeight={700} gutterBottom>{t('supplies.title')}</Typography>
         {[1, 2, 3, 4].map((i) => <Skeleton key={i} variant="rectangular" height={200} sx={{ mb: 2, borderRadius: 1 }} />)}
       </Box>
     );
@@ -199,25 +193,19 @@ export default function HospitalSuppliesPage() {
 
   return (
     <Box sx={{ mx: 1 }}>
-      <Typography variant="h5" fontWeight={700} gutterBottom>医疗机构物资需求</Typography>
+      <Typography variant="h5" fontWeight={700} gutterBottom>{t('supplies.title')}</Typography>
 
       <Card elevation={0} sx={{ mb: 1 }}>
-        <CardContent sx={{ bgcolor: '#f44336', color: '#fff', fontWeight: 700, fontSize: '1rem' }}>
-          本列表中的所有医院均存在
-          <Typography component="span" variant="h6" fontWeight={900}> 非常紧急 </Typography>
-          的物资缺口状况，急需社会各界紧急援助！若您身边有相关资源（包括物流资源、消耗品资源等）请速与这些医院进行联系！
-        </CardContent>
+        <CardContent sx={{ bgcolor: '#f44336', color: '#fff', fontWeight: 700, fontSize: '1rem' }} dangerouslySetInnerHTML={{ __html: t.raw('supplies.urgentBanner') as string }} />
       </Card>
       <Card elevation={0} sx={{ mb: 1 }}>
         <CardContent sx={{ bgcolor: '#4caf50', color: '#fff', fontWeight: 700, fontSize: '0.85rem' }}>
-          为保证需求真实性，本列表中大部分数据均通过【真人电话/微信视频/带相片工作证照片/医院官方电话】的方式核验联系人信息；同时已通过标签方式标明需求核验状况，便于各位捐赠者查验
+          {t('supplies.verificationBanner')}
         </CardContent>
       </Card>
       <Card elevation={0} sx={{ mb: 2 }}>
         <CardContent sx={{ bgcolor: '#9e9e9e', color: '#fff', fontSize: '0.75rem' }}>
-          若您发现信息有不完整、已过期等情况，请点击相应数据卡片右下角的
-          <ReportProblemIcon sx={{ fontSize: 14, verticalAlign: 'middle', mx: 0.3, color: '#eee' }} />
-          纠错按钮发起纠错请求，我们将再次与医院进行二次审核，以保证消息时效性。
+          {t('supplies.correctionBanner')}
         </CardContent>
       </Card>
 
@@ -228,7 +216,7 @@ export default function HospitalSuppliesPage() {
       />
 
       <Box sx={{ textAlign: 'right', mt: 4, color: '#9e9e9e', fontSize: '0.7rem' }}>
-        此页面数据合作方<br />
+        {t('supplies.dataPartner')}<br />
         <a href="https://mp.weixin.qq.com/s/U_IAuov_AR13S87cJYjlSg" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
           WeStar 公益团队
         </a>

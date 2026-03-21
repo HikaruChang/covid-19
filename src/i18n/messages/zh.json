@@ -55,23 +55,32 @@
       "success": "成功",
       "warning": "警告",
       "failed": "失败"
-    }
+    },
+    "submitting": "提交中...",
+    "confirmSubmit": "确认提交"
   },
   "nav": {
     "peopleIndex": "市民信息主页",
     "communitySupplies": "社区物资需求列表",
     "communitySubmission": "提交社区物资需求",
+    "communitySubmissionDesc": "提交新的社区物资需求。提交后将发布于社区物资需求列表中",
     "medicalPlatform": "线上医疗诊断平台",
     "psychologicalPlatform": "线上心理咨询平台",
     "peopleAccommodations": "武汉在外人员住宿",
+    "peopleAccommodationsDesc": "提供武汉在外人员的住宿信息，保障这些群体的基本生活",
     "staffIndex": "医护人员信息主页",
     "staffAccommodations": "医护人员免费住宿",
+    "staffAccommodationsDesc": "为医护人员提供免费住宿信息列表，支持地理位置排序与地区过滤，以提供基本生活保障",
     "staffPsychological": "线上心理咨询平台",
+    "staffPsychologicalDesc": "我们为您提供免费心理咨询平台的查询，包括基本信息与其联系方式",
     "staffSupplies": "医疗机构物资需求",
+    "staffSuppliesDesc": "支持紧急程度与需求核验公示、按照地区过滤等多种功能，方便直观了解情况",
     "staffSubmission": "提交医疗物资需求",
+    "staffSubmissionDesc": "提交新的医疗机构物资需求。提交后将交由内部信息组与官方渠道进行沟通，确保真实性与时效性后，发布于需求列表中",
     "volunteerIndex": "志愿者信息主页",
     "volunteerSupplies": "医疗机构物资需求",
-    "volunteerSubmission": "提交医疗物资需求"
+    "volunteerSubmission": "提交医疗物资需求",
+    "scrollDown": "下拉了解项目详情"
   },
   "accommodations": {
     "title": "医护人员免费住宿",
@@ -83,8 +92,24 @@
     "contact": "联系方式",
     "address": "地址",
     "viewMap": "查看地图",
-    "report": "纠错",
-    "notes": "备注"
+    "report": "信息纠错",
+    "notes": "备注",
+    "status": "状态",
+    "noAddress": "暂无。可点击下方【查看地图】前往查看地址",
+    "phone": "联系电话",
+    "noPhone": "暂无。可点击下方【查看地图】前往查看电话",
+    "searchPlaceholder": "住宿名称、地址",
+    "peopleTitle": "武汉在外人员住宿",
+    "reportCauses": [
+      "地址不存在/未找到",
+      "联系不上",
+      "已被征用",
+      "已住满",
+      "其他原因无法接待",
+      "缺少必需物资无法营业",
+      "信息重复",
+      "其他"
+    ]
   },
   "supplies": {
     "title": "医疗机构物资需求",
@@ -108,8 +133,77 @@
     "source": "需求信息数据来源",
     "proof": "需求的官方证明",
     "notes": "其他备注",
-    "addSupply": "添加物资",
-    "removeSupply": "移除"
+    "addSupply": "添加物品",
+    "removeSupply": "移除物品",
+    "expandDetails": "展开详细需求",
+    "noSupplyData": " (无需求数据)",
+    "noStock": "[库存为零] ",
+    "kindCount": "{count} 种",
+    "quantity": "数量",
+    "noAddressHint": "（暂无详细地址，可点击下方搜索）",
+    "noAddressShort": "暂无详细地址，可点击搜索",
+    "specialNote": "特别备注",
+    "urgentBanner": "本列表中的所有医院均存在不同程度的物资需求。我们根据需求紧急程度标注了标签，标有<b>「非常紧急」</b>标签的医院可能<b>库存为零，急需物资救助</b>。",
+    "veryUrgent": "非常紧急",
+    "verificationBanner": "为保证需求真实性，每一条需求发布前我们都将联系相关医院进行确认并附上官方证明。如果您要捐赠物资，请务必与医院联系后，确认信息准确性后再行捐赠。",
+    "correctionBanner": "若您发现信息有不完整或错误之处，欢迎点击「信息纠错」将情况反馈给我们，我们将尽快处理。感谢！",
+    "dataPartner": "此页面数据合作方",
+    "tags": {
+      "verified": "已核实",
+      "verifiedBy": "已核实：{by}",
+      "unverified": "暂未与官方核实",
+      "criticalNoStock": "非常紧急：库存为零",
+      "shortage": "紧缺"
+    },
+    "reportCauses": [
+      "地址不存在/未找到",
+      "联系不上医院方",
+      "物资被拒收或拦截",
+      "物资已够用",
+      "信息重复",
+      "其他"
+    ],
+    "detail": {
+      "alias": "又名",
+      "needed": "需要",
+      "remaining": "现剩余",
+      "hospitalTitle": "医疗机构物资需求 — 需求列表",
+      "communityTitle": "社区物资需求 — 需求详细信息",
+      "collapse": "收起详细需求"
+    },
+    "submitForm": {
+      "pageTitle": "需求提交",
+      "volunteerNotice": "数据贡献志愿者请注意：数据请按照模板排版、检查后再通过此处提交。若信息被审核组判定为无效信息将被删除。",
+      "autoFillNotice": "为了填写效率考量，我们自动填写了大部分医院都需要的物资信息。还请二次确认是否正确！",
+      "supplyListLabel": "物资需求列表",
+      "supplyItem": "需求物资 #{num}",
+      "unnamed": "(未命名)",
+      "successTitle": "已成功提交物资需求",
+      "successSubtitle": "我们将在审核、确保准确性后以最快速度上线信息。感谢提供！",
+      "backToList": "返回物资列表",
+      "requiredFieldsError": "请填写必填字段：{fields}",
+      "placeholder": {
+        "name": "请输入医院名称",
+        "province": "请选择省份",
+        "city": "请选择城市",
+        "suburb": "请选择区/县",
+        "address": "请输入医院详细地址",
+        "patients": "(选填) 请输入医院现每天接待患者数量",
+        "beds": "(选填) 请输入现医院现床位数",
+        "contactName": "请输入责任人姓名",
+        "contactOrg": "请输入责任人所在单位或组织",
+        "contactPhone": "请输入责任人联系方式",
+        "unit": "如：个、20包/箱",
+        "requirements": "如国家标准 GBxxxxx-xxxx",
+        "pathways": "是否接受个人捐赠和/或企业等捐赠渠道？",
+        "logistic": "如何将物资送抵贵院？有无特殊情况需说明？",
+        "source": "链接最快最准，若无也可填文字说明",
+        "notes": "(选填) 有无其他备注？"
+      },
+      "province": "省份",
+      "city": "城市",
+      "suburb": "区/县"
+    }
   },
   "community": {
     "title": "社区物资需求列表",
@@ -123,16 +217,86 @@
     "agentPhone": "代理人电话",
     "needVehicle": "是否需要车辆",
     "medicalSupplies": "医疗物资需求",
-    "liveSupplies": "生活物资需求"
+    "liveSupplies": "生活物资需求",
+    "notice": "本列表中信息均为各用户自行上传，请自行验证真伪。",
+    "unknownName": "(姓名未知)",
+    "unknownPhone": "(未知)",
+    "phoneLabel": "电话",
+    "submitForm": {
+      "pageTitle": "社区物资需求提交",
+      "cacheNotice": "请注意：由于缓存原因，您的需求可能需要最多 5 分钟才能在需求列表中展示。感谢您的理解与配合！",
+      "successTitle": "已成功提交物资需求",
+      "successSubtitle": "由于缓存原因，您的需求可能需要最多 5 分钟才能在需求列表中展示",
+      "backToList": "返回需求列表",
+      "requiredFieldsError": "请填写必填字段：{fields}",
+      "medicalItem": "医疗需求物资 #{num}",
+      "liveItem": "生活需求物资 #{num}",
+      "unnamed": "(未命名)",
+      "removeItem": "移除此物品",
+      "addMedical": "添加医疗物品",
+      "addLive": "添加生活物品",
+      "province": "省份",
+      "city": "城市",
+      "suburb": "区",
+      "placeholder": {
+        "name": "请输入姓名",
+        "age": "请输入年龄",
+        "province": "请输入省份",
+        "city": "请输入城市",
+        "suburb": "请输入区",
+        "address": "请输入详细地址",
+        "phone": "请输入联系电话",
+        "notes": "有什么需要补充的吗？"
+      }
+    }
   },
   "platforms": {
     "medical": {
       "title": "线上医疗诊断平台",
-      "subtitle": "足不出户即可与众多知名医院专家连线进行远程诊疗"
+      "subtitle": "足不出户即可与众多知名医院专家连线进行远程诊疗",
+      "searchPlaceholder": "平台名称",
+      "diagnosisPlatform": "诊断平台",
+      "howToUse": "使用方法：",
+      "open": "打开",
+      "linkType": {
+        "link": "链接",
+        "wechat": "微信",
+        "jd": "京东APP",
+        "alipay": "支付宝APP"
+      },
+      "reportCauses": [
+        "联系不上",
+        "链接失效",
+        "信息重复",
+        "其他"
+      ]
     },
     "psychological": {
       "title": "线上心理咨询平台",
-      "subtitle": "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式"
+      "subtitle": "我们提供免费心理咨询平台的查询，包括基本信息与其联系方式",
+      "searchPlaceholder": "平台名称、地区或咨询方式",
+      "welcomeBanner": "你好呀～我们这里给你准备了一些可以帮助到你的专业人员们；如果你觉得需要心理援助的话，请一定要联系他们哦！加油！❤️",
+      "openTime": "开放时间",
+      "targetGroup": "服务群体",
+      "allWelcome": "无指定服务群体，所有人均可咨询",
+      "regional": "地方性",
+      "contactMethod": "咨询方式",
+      "viewSource": "查看信息来源",
+      "tags": {
+        "online": "线上",
+        "offline": "线下",
+        "phone": "电话",
+        "web": "网上",
+        "paid": "有偿",
+        "free": "无偿"
+      },
+      "reportCauses": [
+        "联系不上",
+        "信息错误",
+        "已下线",
+        "信息重复",
+        "其他"
+      ]
     }
   },
   "dataTable": {
@@ -195,8 +359,34 @@
     "loadFailed": "数据加载失败",
     "refresh": "刷新"
   },
+  "contact": {
+    "collapse": "收起",
+    "formatError": "排版有误？",
+    "rawDataTitle": "以下是未经排版的数据",
+    "contactPerson": "联系人",
+    "phone": "电话"
+  },
   "description": {
     "title": "关于",
-    "content": "新型冠状病毒肺炎（COVID-19）信息平台由 wuhan.support 团队开发维护，旨在为市民、医护人员和志愿者提供最新的、经过验证的信息服务。"
+    "content": "新型冠状病毒肺炎（COVID-19）信息平台由 wuhan.support 团队开发维护，旨在为市民、医护人员和志愿者提供最新的、经过验证的信息服务。",
+    "whoAreWe": "我们是？",
+    "whoAreWeContent": "我们关注你所关注的，我们支持需要支持的：面向疫区内外民众和医疗机构的多维度综合信息平台。中国加油，我们在一起！",
+    "whoAreWeHashtag": "#中国加油",
+    "targetTitle": "服务对象",
+    "targetPeople": "对普通市民",
+    "targetPeopleContent": "：疫情防控、流言辟谣、义诊平台、免费心理咨询",
+    "targetStaff": "对医护人员",
+    "targetStaffContent": "：需求发布平台、免费住宿及餐食、免费心理咨询、医疗器械捐赠",
+    "targetVolunteer": "对志愿者",
+    "targetVolunteerContent": "：医疗机构物资需求查询",
+    "featuresTitle": "项目特点",
+    "features": [
+      "✅ <b>非盈利</b>：保证中立性",
+      "✅ <b>综合平台</b>：信息涵盖面广，受众类型多样",
+      "✅ <b>响应及时</b>：推送最新一线信息",
+      "✅ <b>国际化项目</b>：欢迎任何形式合作"
+    ],
+    "shareTitle": "分享",
+    "shareContent": "欢迎点击右上角分享<b>综合信息平台</b>，让更多朋友了解疫情发展、让更多医护人员的生活具有基本保障！中国加油，我们在一起！"
   }
 }

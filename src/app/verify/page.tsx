@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import {
   Box,
   Card,
@@ -23,16 +24,18 @@ import GroupIcon from '@mui/icons-material/Group';
 import LocaleSwitcher from '@/components/LocaleSwitcher';
 
 // 0=WAITING, 1=OK, 2=SIGNATURE_MISMATCH, 3=ILLEGAL_ARGUMENTS
-const statusConfig = [
-  { color: '#9e9e9e', icon: <TimerIcon sx={{ fontSize: 48 }} />, title: '验证中...', subtitle: '正在验证签名，请稍候' },
-  { color: '#4caf50', icon: <CheckCircleIcon sx={{ fontSize: 48, color: '#4caf50' }} />, title: '验证通过', subtitle: '此证书签名有效且已通过验证' },
-  { color: '#f44336', icon: <ErrorIcon sx={{ fontSize: 48, color: '#f44336' }} />, title: '签名不匹配', subtitle: '此证书签名验证失败，证书可能被篡改' },
-  { color: '#ff9800', icon: <HelpCircleIcon sx={{ fontSize: 48, color: '#ff9800' }} />, title: '参数缺失', subtitle: '缺少必要的验证参数' },
+const statusIcons = [
+  { color: '#9e9e9e', icon: <TimerIcon sx={{ fontSize: 48 }} /> },
+  { color: '#4caf50', icon: <CheckCircleIcon sx={{ fontSize: 48, color: '#4caf50' }} /> },
+  { color: '#f44336', icon: <ErrorIcon sx={{ fontSize: 48, color: '#f44336' }} /> },
+  { color: '#ff9800', icon: <HelpCircleIcon sx={{ fontSize: 48, color: '#ff9800' }} /> },
 ];
 
 function VerifierContent() {
   const searchParams = useSearchParams();
+  const t = useTranslations();
   const [result, setResult] = useState(0); // WAITING
+  const statuses = t.raw('verify.statuses') as { title: string; subtitle: string }[];
 
   const name = searchParams.get('n') || '';
   const group = searchParams.get('g') || '';
@@ -69,7 +72,7 @@ function VerifierContent() {
     return () => clearTimeout(timeoutId);
   }, [name, group, signature]);
 
-  const status = statusConfig[result];
+  const status = { ...statusIcons[result], ...statuses[result] };
 
   return (
     <Box
@@ -97,7 +100,7 @@ function VerifierContent() {
         wuhan.support Certificate Verification
       </Typography>
       <Typography variant="h5" fontWeight={700} gutterBottom>
-        志愿者证书验证
+        {t('verify.title')}
       </Typography>
 
       <Divider sx={{ width: '100%', maxWidth: 400, my: 2 }} />
@@ -139,18 +142,18 @@ function VerifierContent() {
             </Box>
           )}
           <CardContent>
-            <Typography variant="h6" gutterBottom>证书详情</Typography>
+            <Typography variant="h6" gutterBottom>{t('verify.details.title')}</Typography>
             <Typography variant="subtitle1" color="text.secondary" sx={{ textAlign: 'left', mb: 1 }}>
-              以下信息来自证书签名
+              {t('verify.details.subtitle')}
             </Typography>
             <List>
               <ListItem>
                 <ListItemIcon><PersonIcon /></ListItemIcon>
-                <ListItemText primary={name} secondary="姓名" />
+                <ListItemText primary={name} secondary={t('verify.field.name')} />
               </ListItem>
               <ListItem>
                 <ListItemIcon><GroupIcon /></ListItemIcon>
-                <ListItemText primary={group} secondary="组别" />
+                <ListItemText primary={group} secondary={t('verify.field.group')} />
               </ListItem>
             </List>
           </CardContent>

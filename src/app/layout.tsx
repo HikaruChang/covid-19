@@ -1,4 +1,7 @@
 import type { Metadata } from 'next';
+import { cookies } from 'next/headers';
+import { NextIntlClientProvider } from 'next-intl';
+import { getMessages } from 'next-intl/server';
 import './globals.css';
 import Providers from '@/components/Providers';
 import AppShell from '@/components/AppShell';
@@ -58,17 +61,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const cookieStore = await cookies();
+  const locale = cookieStore.get('locale')?.value ?? 'zh';
+  const messages = await getMessages();
+
   return (
-    <html lang="zh">
+    <html lang={locale}>
       <body style={{ margin: 0 }}>
-        <Providers>
-          <AppShell>{children}</AppShell>
-        </Providers>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <Providers>
+            <AppShell>{children}</AppShell>
+          </Providers>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

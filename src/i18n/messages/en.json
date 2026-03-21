@@ -9,20 +9,20 @@
   },
   "home": {
     "_name": "Home",
-    "title": "You are?",
-    "cardPrefix": "I am a "
+    "title": "Who are you?",
+    "cardPrefix": "I am "
   },
   "people": {
-    "_name": "Citizen",
-    "_subtitle": "Medical diagnosis platform, online psychological consultation platform, information kanban, accommodation for Wuhan citizens, etc."
+    "_name": "a Citizen",
+    "_subtitle": "Online medical diagnosis, psychological counseling, information dashboard, and accommodation info for Wuhan residents"
   },
   "staff": {
     "_name": "Medical Staff",
-    "_subtitle": "Free accommodation, psychological consultation platform and medical institution material demand submission system for medical staff"
+    "_subtitle": "Free accommodation, psychological counseling, and medical supply demand submission system for healthcare workers"
   },
   "volunteer": {
-    "_name": "Volunteer",
-    "_subtitle": "The medical institution's material requirements that can be actually used by volunteers and verified by multiple parties"
+    "_name": "a Volunteer",
+    "_subtitle": "Verified medical institution supply needs for volunteers, along with a supply demand submission system"
   },
   "menu": {
     "languages": "Language",
@@ -41,8 +41,8 @@
       "false": "No"
     },
     "have": {
-      "true": "Have",
-      "false": "Not have"
+      "true": "Yes",
+      "false": "None"
     },
     "dialog": {
       "cancel": "Cancel",
@@ -56,23 +56,32 @@
       "success": "Success",
       "warning": "Warning",
       "failed": "Failed"
-    }
+    },
+    "submitting": "Submitting...",
+    "confirmSubmit": "Submit"
   },
   "nav": {
     "peopleIndex": "Citizen Home",
     "communitySupplies": "Community Supplies List",
     "communitySubmission": "Submit Community Supplies",
+    "communitySubmissionDesc": "Submit new community supply needs. After submission, it will be published in the community supplies list",
     "medicalPlatform": "Online Medical Platform",
     "psychologicalPlatform": "Online Mental Health Platform",
     "peopleAccommodations": "Accommodation for Wuhan Residents",
+    "peopleAccommodationsDesc": "Accommodation information for Wuhan residents stranded outside the city, ensuring basic living needs",
     "staffIndex": "Medical Staff Home",
     "staffAccommodations": "Free Accommodation",
+    "staffAccommodationsDesc": "Free accommodation listings for medical staff with geolocation sorting and region filtering",
     "staffPsychological": "Online Mental Health Platform",
+    "staffPsychologicalDesc": "Search for free psychological counseling platforms with basic information and contact details",
     "staffSupplies": "Hospital Supply Needs",
+    "staffSuppliesDesc": "Supports urgency levels, demand verification, region filtering and other features for clear situation awareness",
     "staffSubmission": "Submit Supply Needs",
+    "staffSubmissionDesc": "Submit new medical institution supply needs. After submission, our team will verify with official channels to ensure accuracy and timeliness before publishing",
     "volunteerIndex": "Volunteer Home",
     "volunteerSupplies": "Hospital Supply Needs",
-    "volunteerSubmission": "Submit Supply Needs"
+    "volunteerSubmission": "Submit Supply Needs",
+    "scrollDown": "Scroll down for project details"
   },
   "accommodations": {
     "title": "Free Accommodation for Medical Staff",
@@ -85,7 +94,23 @@
     "address": "Address",
     "viewMap": "View Map",
     "report": "Report Error",
-    "notes": "Notes"
+    "notes": "Notes",
+    "status": "Status",
+    "noAddress": "Not available. Please click \"View Map\" below to look up the address",
+    "phone": "Phone",
+    "noPhone": "Not available. Please click \"View Map\" below to look up the phone number",
+    "searchPlaceholder": "Accommodation name or address",
+    "peopleTitle": "Accommodation for Wuhan Residents",
+    "reportCauses": [
+      "Address not found",
+      "Unable to contact",
+      "Requisitioned",
+      "Fully occupied",
+      "Unable to accept for other reasons",
+      "Lacking essential supplies to operate",
+      "Duplicate entry",
+      "Other"
+    ]
   },
   "supplies": {
     "title": "Hospital Supply Needs",
@@ -110,7 +135,76 @@
     "proof": "Official Proof",
     "notes": "Notes",
     "addSupply": "Add Supply",
-    "removeSupply": "Remove"
+    "removeSupply": "Remove",
+    "expandDetails": "Expand Details",
+    "noSupplyData": " (no supply data)",
+    "noStock": "[Out of stock] ",
+    "kindCount": "{count} types",
+    "quantity": "Quantity",
+    "noAddressHint": "(No detailed address, click below to search)",
+    "noAddressShort": "No detailed address, click to search",
+    "specialNote": "Special Note",
+    "urgentBanner": "All hospitals in this list have varying degrees of supply needs. We have labeled them by urgency level. Hospitals marked <b>\"Very Urgent\"</b> may have <b>zero stock and desperately need supply assistance</b>.",
+    "veryUrgent": "Very Urgent",
+    "verificationBanner": "To ensure authenticity, we contact each hospital for confirmation before publishing. If you plan to donate supplies, please confirm the information with the hospital first.",
+    "correctionBanner": "If you find any incomplete or incorrect information, please click \"Report Error\" to let us know. We will address it as soon as possible. Thank you!",
+    "dataPartner": "Data partner for this page",
+    "tags": {
+      "verified": "Verified",
+      "verifiedBy": "Verified: {by}",
+      "unverified": "Not yet verified officially",
+      "criticalNoStock": "Very Urgent: Zero Stock",
+      "shortage": "Shortage"
+    },
+    "reportCauses": [
+      "Address not found",
+      "Unable to contact hospital",
+      "Supplies rejected or intercepted",
+      "Supplies are sufficient",
+      "Duplicate entry",
+      "Other"
+    ],
+    "detail": {
+      "alias": "Also known as",
+      "needed": "Needed",
+      "remaining": "Remaining",
+      "hospitalTitle": "Hospital Supply Needs — Supply List",
+      "communityTitle": "Community Supply Needs — Details",
+      "collapse": "Collapse Details"
+    },
+    "submitForm": {
+      "pageTitle": "Submit Supply Needs",
+      "volunteerNotice": "Data contributors please note: Please format data according to the template and verify before submitting. Invalid submissions will be removed after review.",
+      "autoFillNotice": "For efficiency, we have pre-filled common medical supplies. Please verify the information is correct!",
+      "supplyListLabel": "Supply Needs List",
+      "supplyItem": "Supply #{num}",
+      "unnamed": "(unnamed)",
+      "successTitle": "Supply needs submitted successfully",
+      "successSubtitle": "We will review and verify the information before publishing. Thank you!",
+      "backToList": "Back to Supply List",
+      "requiredFieldsError": "Please fill in required fields: {fields}",
+      "placeholder": {
+        "name": "Enter hospital name",
+        "province": "Select province",
+        "city": "Select city",
+        "suburb": "Select district/county",
+        "address": "Enter hospital detailed address",
+        "patients": "(Optional) Enter daily patient count",
+        "beds": "(Optional) Enter hospital bed count",
+        "contactName": "Enter contact person name",
+        "contactOrg": "Enter contact organization",
+        "contactPhone": "Enter contact phone",
+        "unit": "e.g., pieces, 20 packs/box",
+        "requirements": "e.g., national standard GBxxxxx-xxxx",
+        "pathways": "Do you accept individual and/or corporate donations?",
+        "logistic": "How to deliver supplies to the hospital? Any special logistics notes?",
+        "source": "Links are fastest and most accurate; text descriptions are also accepted",
+        "notes": "(Optional) Any other notes?"
+      },
+      "province": "Province",
+      "city": "City",
+      "suburb": "District/County"
+    }
   },
   "community": {
     "title": "Community Supply Needs",
@@ -124,16 +218,86 @@
     "agentPhone": "Agent Phone",
     "needVehicle": "Need Vehicle",
     "medicalSupplies": "Medical Supplies",
-    "liveSupplies": "Living Supplies"
+    "liveSupplies": "Living Supplies",
+    "notice": "All information in this list is uploaded by users. Please verify authenticity yourself.",
+    "unknownName": "(Name unknown)",
+    "unknownPhone": "(Unknown)",
+    "phoneLabel": "Phone",
+    "submitForm": {
+      "pageTitle": "Submit Community Supply Needs",
+      "cacheNotice": "Please note: Due to caching, your submission may take up to 5 minutes to appear in the list. Thank you for your understanding!",
+      "successTitle": "Supply needs submitted successfully",
+      "successSubtitle": "Due to caching, your submission may take up to 5 minutes to appear in the list",
+      "backToList": "Back to Supply List",
+      "requiredFieldsError": "Please fill in required fields: {fields}",
+      "medicalItem": "Medical Supply #{num}",
+      "liveItem": "Living Supply #{num}",
+      "unnamed": "(unnamed)",
+      "removeItem": "Remove Item",
+      "addMedical": "Add Medical Supply",
+      "addLive": "Add Living Supply",
+      "province": "Province",
+      "city": "City",
+      "suburb": "District",
+      "placeholder": {
+        "name": "Enter name",
+        "age": "Enter age",
+        "province": "Enter province",
+        "city": "Enter city",
+        "suburb": "Enter district",
+        "address": "Enter detailed address",
+        "phone": "Enter phone number",
+        "notes": "Anything else to add?"
+      }
+    }
   },
   "platforms": {
     "medical": {
       "title": "Online Medical Platforms",
-      "subtitle": "Connect with experts from renowned hospitals for remote diagnosis"
+      "subtitle": "Connect with experts from renowned hospitals for remote diagnosis",
+      "searchPlaceholder": "Platform name",
+      "diagnosisPlatform": "Diagnosis Platform",
+      "howToUse": "How to use:",
+      "open": "Open",
+      "linkType": {
+        "link": "Link",
+        "wechat": "WeChat",
+        "jd": "JD App",
+        "alipay": "Alipay App"
+      },
+      "reportCauses": [
+        "Unable to contact",
+        "Link expired",
+        "Duplicate entry",
+        "Other"
+      ]
     },
     "psychological": {
       "title": "Online Mental Health Platforms",
-      "subtitle": "We provide free psychological consultation platform search including basic information and contact details"
+      "subtitle": "Search for free psychological counseling platforms with basic information and contact details",
+      "searchPlaceholder": "Platform name, region, or consultation method",
+      "welcomeBanner": "Hello! We have gathered professional counselors here for you. If you feel you need psychological support, please don't hesitate to reach out to them! Stay strong! ❤️",
+      "openTime": "Available Hours",
+      "targetGroup": "Target Audience",
+      "allWelcome": "Open to everyone, no restrictions",
+      "regional": "Regional",
+      "contactMethod": "Consultation Method",
+      "viewSource": "View Source",
+      "tags": {
+        "online": "Online",
+        "offline": "Offline",
+        "phone": "Phone",
+        "web": "Web",
+        "paid": "Paid",
+        "free": "Free"
+      },
+      "reportCauses": [
+        "Unable to contact",
+        "Incorrect information",
+        "Taken offline",
+        "Duplicate entry",
+        "Other"
+      ]
     }
   },
   "dataTable": {
@@ -141,7 +305,7 @@
     "searchPlaceholder": "Search by name / region / address",
     "filterByRegion": "Filter by region:",
     "geoSorted": "Sorted by nearest distance",
-    "geoFailed": "Location failed, please check browser permissions",
+    "geoFailed": "Location access failed. Please check your browser location permissions.",
     "noData": "Sorry, there are no records available at this time",
     "noResults": "No results found for \"{query}\"",
     "close": "Close",
@@ -152,7 +316,7 @@
     "errorType": "Error Type",
     "errorTypePlaceholder": "Select error type",
     "notice": "After receiving the correction request, we will review this information again.",
-    "warning": "Note: Our human resources are limited, please do not abuse this feature. Thank you!",
+    "warning": "Note: Our resources are limited. Please do not abuse this feature. Thank you!",
     "causes": [
       "Inaccurate info",
       "Outdated info",
@@ -196,8 +360,34 @@
     "loadFailed": "Failed to load data",
     "refresh": "Refresh"
   },
+  "contact": {
+    "collapse": "Collapse",
+    "formatError": "Formatting issue?",
+    "rawDataTitle": "Below is the unformatted data",
+    "contactPerson": "Contact",
+    "phone": "Phone"
+  },
   "description": {
     "title": "About",
-    "content": "The COVID-19 information platform is developed and maintained by the wuhan.support team, providing verified information services for citizens, medical staff, and volunteers."
+    "content": "The COVID-19 information platform is developed and maintained by the wuhan.support team, providing verified information services for citizens, medical staff, and volunteers.",
+    "whoAreWe": "Who are we?",
+    "whoAreWeContent": "We care about what you care about and support those who need it most — a comprehensive information platform for citizens and medical institutions in and outside the affected areas. Stay strong, we are with you!",
+    "whoAreWeHashtag": "#StayStrongChina",
+    "targetTitle": "Target Audience",
+    "targetPeople": "For citizens",
+    "targetPeopleContent": ": pandemic prevention, rumor debunking, free medical consultation, free psychological counseling",
+    "targetStaff": "For medical staff",
+    "targetStaffContent": ": demand publishing platform, free accommodation & meals, free psychological counseling, medical equipment donations",
+    "targetVolunteer": "For volunteers",
+    "targetVolunteerContent": ": medical institution supply needs query",
+    "featuresTitle": "Features",
+    "features": [
+      "✅ <b>Non-profit</b>: Ensuring neutrality",
+      "✅ <b>Comprehensive platform</b>: Wide information coverage, diverse audience types",
+      "✅ <b>Rapid response</b>: Delivering the latest frontline updates",
+      "✅ <b>International project</b>: All forms of cooperation are welcome"
+    ],
+    "shareTitle": "Share",
+    "shareContent": "Click the share button in the top right corner to spread this <b>comprehensive information platform</b>, helping more people stay informed about the pandemic and ensuring medical staff have basic living support! Stay strong, we are with you!"
   }
 }
