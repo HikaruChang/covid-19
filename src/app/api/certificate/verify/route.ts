@@ -59,6 +59,10 @@ export async function POST(request: NextRequest) {
     // 动态导入 openpgp（避免在边缘环境的问题）
     const openpgp = await import('openpgp');
 
+    // 公钥使用 DSA 算法，openpgp v5 默认拒绝 DSA 密钥（认为太弱）
+    // 此处仅用于验证已有证书签名，故放宽限制
+    const config = { rejectPublicKeyAlgorithms: new Set<number>() };
+
     const message = [name, group].join('-');
     const textSignature = `-----BEGIN PGP SIGNATURE-----\n\n${signature.split('_').join('\n')}\n-----END PGP SIGNATURE-----`;
 
@@ -70,6 +74,7 @@ export async function POST(request: NextRequest) {
       verificationKeys: publicKey,
       message: pgpMessage,
       signature: pgpSignature,
+      config,
     });
 
     const isValid = await result.signatures[0]?.verified;
